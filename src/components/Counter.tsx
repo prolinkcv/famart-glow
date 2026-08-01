@@ -10,7 +10,7 @@ export function Counter({ to, suffix = "", duration = 1600 }: { to: number; suff
     let raf = 0;
     const io = new IntersectionObserver(
       (entries) => {
-        if (!entries[0].isIntersecting) return;
+        if (!entries[0]?.isIntersecting) return;
         io.disconnect();
         const start = performance.now();
         const tick = (now: number) => {
