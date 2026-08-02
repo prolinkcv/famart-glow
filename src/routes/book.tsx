@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Clock, MapPin, MessageCircle, Phone } from "lucide-react";
+import { CheckCircle2, Clock, MapPin, MessageCircle, Phone } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -60,6 +60,7 @@ type Errors = Partial<Record<keyof z.infer<typeof formSchema>, string>>;
 function Book() {
   const { service } = Route.useSearch();
   const [errors, setErrors] = useState<Errors>({});
+  const [confirmed, setConfirmed] = useState<z.infer<typeof formSchema> | null>(null);
   const [values, setValues] = useState({
     name: "",
     phone: "",
@@ -101,8 +102,10 @@ function Book() {
       toast.error("Please check the highlighted fields.");
       return;
     }
-    toast.success("Appointment request ready", {
-      description: "We'll confirm your slot shortly. You can also send it on WhatsApp instantly.",
+    setConfirmed(data);
+    window.open(waLink(summary(data)), "_blank", "noopener");
+    toast.success("Appointment request confirmed", {
+      description: "Your details have been sent to our WhatsApp. We'll confirm your slot shortly.",
     });
   };
 
@@ -112,8 +115,15 @@ function Book() {
       window.open(waLink(), "_blank", "noopener");
       return;
     }
+    setConfirmed(data);
     window.open(waLink(summary(data)), "_blank", "noopener");
   };
+
+  const resetForm = () => {
+    setConfirmed(null);
+    setValues({ name: "", phone: "", email: "", date: "", time: "", service: "", message: "" });
+  };
+
 
   const field = (k: keyof Errors) =>
     errors[k] ? "border-destructive focus-visible:ring-destructive" : "";
@@ -139,7 +149,68 @@ function Book() {
 
       <section className="mx-auto grid max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.5fr_1fr]">
         <Reveal>
-          <form
+          {confirmed ? (
+            <div className="rounded-[2rem] border bg-card p-7 shadow-soft sm:p-10">
+              <span className="inline-flex size-14 items-center justify-center rounded-2xl bg-accent text-primary">
+                <CheckCircle2 className="size-7" />
+              </span>
+              <h2 className="mt-5 font-display text-2xl font-semibold">
+                Thank you, {confirmed.name.split(" ")[0]} — your request is confirmed
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Your appointment details have been sent to our WhatsApp. Our team will confirm your
+                slot shortly during working hours ({SITE.hours}). If the WhatsApp window did not
+                open, tap the button below.
+              </p>
+
+              <dl className="mt-7 grid gap-4 rounded-2xl bg-surface p-6 text-sm sm:grid-cols-2">
+                {[
+                  ["Name", confirmed.name],
+                  ["Phone", confirmed.phone],
+                  ["Email", confirmed.email || "—"],
+                  ["Service", confirmed.service],
+                  ["Preferred date", confirmed.date],
+                  ["Preferred time", confirmed.time],
+                ].map(([label, value]) => (
+                  <div key={label}>
+                    <dt className="text-xs tracking-wide text-muted-foreground uppercase">
+                      {label}
+                    </dt>
+                    <dd className="mt-1 font-medium">{value}</dd>
+                  </div>
+                ))}
+                {confirmed.message && (
+                  <div className="sm:col-span-2">
+                    <dt className="text-xs tracking-wide text-muted-foreground uppercase">
+                      Message
+                    </dt>
+                    <dd className="mt-1 font-medium">{confirmed.message}</dd>
+                  </div>
+                )}
+              </dl>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button
+                  type="button"
+                  variant="whatsapp"
+                  size="lg"
+                  onClick={() => window.open(waLink(summary(confirmed)), "_blank", "noopener")}
+                >
+                  <MessageCircle /> Resend on WhatsApp
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <a href={telLink}>
+                    <Phone /> Call the clinic
+                  </a>
+                </Button>
+                <Button type="button" variant="ghost" size="lg" onClick={resetForm}>
+                  Book another appointment
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <form
+
             onSubmit={onSubmit}
             noValidate
             className="rounded-[2rem] border bg-card p-7 shadow-soft sm:p-10"
@@ -253,6 +324,7 @@ function Book() {
               </Button>
             </div>
           </form>
+          )}
         </Reveal>
 
         <Reveal delay={120}>

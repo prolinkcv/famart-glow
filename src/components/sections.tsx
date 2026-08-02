@@ -52,8 +52,8 @@ export function ServicesGrid({ limit }: { limit?: number }) {
             <h3 className="mt-5 font-display text-lg font-semibold">{s.name}</h3>
             <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
             <Link
-              to="/book"
-              search={{ service: s.name }}
+              to="/services/$slug"
+              params={{ slug: s.slug }}
               className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-all group-hover:gap-2.5"
             >
               Learn More <span aria-hidden="true">→</span>

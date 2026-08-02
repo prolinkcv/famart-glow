@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FloatingActions } from "@/components/FloatingActions";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { Toaster } from "@/components/ui/sonner";
 import { SITE } from "@/lib/site";
 
@@ -174,6 +175,7 @@ function RootComponent() {
       >
         Skip to content
       </a>
+      <ScrollToTop />
       <Header />
       <main id="main" className="pt-20">
         <Outlet />
