@@ -149,7 +149,67 @@ function Book() {
 
       <section className="mx-auto grid max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.5fr_1fr]">
         <Reveal>
-          <form
+          {confirmed ? (
+            <div className="rounded-[2rem] border bg-card p-7 shadow-soft sm:p-10">
+              <span className="inline-flex size-14 items-center justify-center rounded-2xl bg-accent text-primary">
+                <CheckCircle2 className="size-7" />
+              </span>
+              <h2 className="mt-5 font-display text-2xl font-semibold">
+                Thank you, {confirmed.name.split(" ")[0]} — your request is confirmed
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Your appointment details have been sent to our WhatsApp. Our team will confirm your
+                slot shortly during working hours ({SITE.hours}). If the WhatsApp window did not
+                open, tap the button below.
+              </p>
+
+              <dl className="mt-7 grid gap-4 rounded-2xl bg-surface p-6 text-sm sm:grid-cols-2">
+                {[
+                  ["Name", confirmed.name],
+                  ["Phone", confirmed.phone],
+                  ["Email", confirmed.email || "—"],
+                  ["Service", confirmed.service],
+                  ["Preferred date", confirmed.date],
+                  ["Preferred time", confirmed.time],
+                ].map(([label, value]) => (
+                  <div key={label}>
+                    <dt className="text-xs tracking-wide text-muted-foreground uppercase">
+                      {label}
+                    </dt>
+                    <dd className="mt-1 font-medium">{value}</dd>
+                  </div>
+                ))}
+                {confirmed.message && (
+                  <div className="sm:col-span-2">
+                    <dt className="text-xs tracking-wide text-muted-foreground uppercase">
+                      Message
+                    </dt>
+                    <dd className="mt-1 font-medium">{confirmed.message}</dd>
+                  </div>
+                )}
+              </dl>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button
+                  type="button"
+                  variant="whatsapp"
+                  size="lg"
+                  onClick={() => window.open(waLink(summary(confirmed)), "_blank", "noopener")}
+                >
+                  <MessageCircle /> Resend on WhatsApp
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <a href={telLink}>
+                    <Phone /> Call the clinic
+                  </a>
+                </Button>
+                <Button type="button" variant="ghost" size="lg" onClick={resetForm}>
+                  Book another appointment
+                </Button>
+              </div>
+            </div>
+          ) : (
+
             onSubmit={onSubmit}
             noValidate
             className="rounded-[2rem] border bg-card p-7 shadow-soft sm:p-10"
