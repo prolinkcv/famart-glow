@@ -174,6 +174,7 @@ function RootComponent() {
       >
         Skip to content
       </a>
+      <ScrollToTop />
       <Header />
       <main id="main" className="pt-20">
         <Outlet />
