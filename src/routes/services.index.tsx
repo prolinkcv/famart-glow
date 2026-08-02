@@ -3,7 +3,7 @@ import { CtaBand, Faqs, SectionHeading, ServicesGrid } from "@/components/sectio
 import { Reveal } from "@/components/Reveal";
 import { services, SITE } from "@/lib/site";
 
-export const Route = createFileRoute("/services")({
+export const Route = createFileRoute("/services/")({
   component: Services,
   head: () => ({
     meta: [
