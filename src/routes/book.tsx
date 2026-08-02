@@ -60,6 +60,7 @@ type Errors = Partial<Record<keyof z.infer<typeof formSchema>, string>>;
 function Book() {
   const { service } = Route.useSearch();
   const [errors, setErrors] = useState<Errors>({});
+  const [confirmed, setConfirmed] = useState<z.infer<typeof formSchema> | null>(null);
   const [values, setValues] = useState({
     name: "",
     phone: "",
@@ -101,8 +102,10 @@ function Book() {
       toast.error("Please check the highlighted fields.");
       return;
     }
-    toast.success("Appointment request ready", {
-      description: "We'll confirm your slot shortly. You can also send it on WhatsApp instantly.",
+    setConfirmed(data);
+    window.open(waLink(summary(data)), "_blank", "noopener");
+    toast.success("Appointment request confirmed", {
+      description: "Your details have been sent to our WhatsApp. We'll confirm your slot shortly.",
     });
   };
 
@@ -112,8 +115,15 @@ function Book() {
       window.open(waLink(), "_blank", "noopener");
       return;
     }
+    setConfirmed(data);
     window.open(waLink(summary(data)), "_blank", "noopener");
   };
+
+  const resetForm = () => {
+    setConfirmed(null);
+    setValues({ name: "", phone: "", email: "", date: "", time: "", service: "", message: "" });
+  };
+
 
   const field = (k: keyof Errors) =>
     errors[k] ? "border-destructive focus-visible:ring-destructive" : "";
