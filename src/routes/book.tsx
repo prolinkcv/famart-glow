@@ -324,6 +324,7 @@ function Book() {
               </Button>
             </div>
           </form>
+          )}
         </Reveal>
 
         <Reveal delay={120}>
