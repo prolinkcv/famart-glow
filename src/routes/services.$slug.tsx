@@ -107,7 +107,10 @@ function ServiceNotFound() {
 }
 
 function ServiceDetailPage() {
-  const { service, detail } = Route.useLoaderData();
+  const { service, detail } = Route.useLoaderData() as {
+    service: (typeof services)[number];
+    detail: ServiceDetail;
+  };
   const related = services.filter((s) => s.slug !== service.slug).slice(0, 3);
 
   return (
