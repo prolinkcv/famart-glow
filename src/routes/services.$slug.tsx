@@ -11,6 +11,7 @@ import { Icon } from "@/components/Icon";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/sections";
 import { SITE, serviceDetails, services, telLink, waLink } from "@/lib/site";
+import type { ServiceDetail } from "@/lib/site";
 
 const findService = (slug: string) => services.find((s) => s.slug === slug);
 
