@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Clock, Facebook, Instagram, Linkedin, MapPin, Phone, Mail } from "lucide-react";
-import logo from "@/assets/famart-logo.png.asset.json";
+import logo from "@/assets/famart-logo-new.png.asset.json";
 import { SITE, mapsLink, services, telLink } from "@/lib/site";
 
 export function Footer() {
@@ -12,9 +12,9 @@ export function Footer() {
             src={logo.url}
             alt={`${SITE.name} logo`}
             loading="lazy"
-            width={72}
-            height={72}
-            className="h-14 w-14 object-contain"
+            width={112}
+            height={112}
+            className="h-20 w-20 object-contain"
           />
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
             Expert dermatology, skin care and medical consultation in the heart of Nairobi CBD —

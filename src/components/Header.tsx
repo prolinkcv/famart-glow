@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, Phone, X } from "lucide-react";
-import logo from "@/assets/famart-logo.png.asset.json";
+import logo from "@/assets/famart-logo-new.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { SITE, telLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -36,9 +36,9 @@ export function Header() {
           <img
             src={logo.url}
             alt={`${SITE.name} logo`}
-            width={56}
-            height={56}
-            className="h-11 w-11 object-contain"
+            width={96}
+            height={96}
+            className="h-14 w-14 object-contain sm:h-16 sm:w-16"
           />
           <span className="leading-tight">
             <span className="block font-display text-base font-bold tracking-tight">
