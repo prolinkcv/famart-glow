@@ -20,6 +20,16 @@ import { SITE, services } from "@/lib/site";
 
 function NotFoundComponent() {
   const topServices = services.slice(0, 6);
+
+  useEffect(() => {
+    document.title = `Page Not Found (404) | ${SITE.shortName}`;
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex, follow";
+    document.head.appendChild(meta);
+    return () => meta.remove();
+  }, []);
+
   return (
     <main className="mx-auto max-w-4xl px-5 py-24 text-center">
       <p className="font-display text-6xl font-bold text-primary sm:text-7xl">404</p>
