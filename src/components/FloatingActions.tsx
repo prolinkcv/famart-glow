@@ -20,7 +20,7 @@ export function FloatingActions() {
     const footer = document.querySelector("footer");
     if (!footer) return;
     const io = new IntersectionObserver(
-      ([entry]) => setFooterVisible(entry.isIntersecting),
+      (entries) => setFooterVisible(entries[0]?.isIntersecting ?? false),
       { rootMargin: "0px 0px -20% 0px" },
     );
     io.observe(footer);

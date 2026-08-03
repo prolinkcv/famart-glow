@@ -19,24 +19,59 @@ import { Toaster } from "@/components/ui/sonner";
 import { SITE } from "@/lib/site";
 
 function NotFoundComponent() {
+  const topServices = services.slice(0, 6);
   return (
-    <div className="flex min-h-dvh items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
+    <main className="mx-auto max-w-4xl px-5 py-24 text-center">
+      <p className="font-display text-6xl font-bold text-primary sm:text-7xl">404</p>
+      <h1 className="mt-4 text-2xl font-bold sm:text-3xl">
+        We couldn&apos;t find that page
+      </h1>
+      <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
+        The page may have moved or no longer exists. Here are the fastest ways to get what you need
+        at {SITE.shortName}.
+      </p>
+
+      <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <Link
+          to="/book"
+          className="inline-flex items-center justify-center rounded-full gradient-brand px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lift"
+        >
+          Book an Appointment
+        </Link>
+        <Link
+          to="/services"
+          className="inline-flex items-center justify-center rounded-full border border-input bg-background px-6 py-3 text-sm font-medium transition-colors hover:bg-accent"
+        >
+          All Services
+        </Link>
+        <Link
+          to="/contact"
+          className="inline-flex items-center justify-center rounded-full border border-input bg-background px-6 py-3 text-sm font-medium transition-colors hover:bg-accent"
+        >
+          Contact Us
+        </Link>
       </div>
-    </div>
+
+      <section className="mt-14 text-left">
+        <h2 className="text-center font-display text-lg font-semibold">Popular treatments</h2>
+        <ul className="mx-auto mt-5 grid max-w-3xl gap-3 sm:grid-cols-2">
+          {topServices.map((s) => (
+            <li key={s.slug}>
+              <Link
+                to="/services/$slug"
+                params={{ slug: s.slug }}
+                className="block rounded-2xl border bg-card p-4 text-sm font-medium shadow-soft transition-colors hover:border-primary hover:text-primary"
+              >
+                {s.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-8 text-center text-sm text-muted-foreground">
+          Or go back to the <Link to="/" className="text-primary underline-offset-4 hover:underline">home page</Link>.
+        </p>
+      </section>
+    </main>
   );
 }
 
