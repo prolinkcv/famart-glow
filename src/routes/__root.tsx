@@ -16,7 +16,7 @@ import { Footer } from "@/components/Footer";
 import { FloatingActions } from "@/components/FloatingActions";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { Toaster } from "@/components/ui/sonner";
-import { SITE } from "@/lib/site";
+import { SITE, services } from "@/lib/site";
 
 function NotFoundComponent() {
   const topServices = services.slice(0, 6);
