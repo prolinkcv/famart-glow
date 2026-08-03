@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Reveal } from "@/components/Reveal";
-import { SITE, mapsLink, services, telLink, waLink } from "@/lib/site";
+import { SITE, bookingMessage, mapsLink, openWhatsApp, services, telLink } from "@/lib/site";
 
 const searchSchema = z.object({ service: z.string().max(80).optional() });
 
@@ -88,12 +88,17 @@ function Book() {
     return parsed.data;
   };
 
-  const summary = (d: z.infer<typeof formSchema>) =>
-    `Hello Famart Healthcare, I would like to book an appointment.\n\nName: ${d.name}\nPhone: ${d.phone}${
-      d.email ? `\nEmail: ${d.email}` : ""
-    }\nPreferred date: ${d.date}\nPreferred time: ${d.time}\nService: ${d.service}${
-      d.message ? `\nMessage: ${d.message}` : ""
-    }`;
+  const summary = (d: z.infer<typeof formSchema>) => bookingMessage(d);
+
+  const sendToWhatsApp = (d: z.infer<typeof formSchema>) => {
+    const { prefilled } = openWhatsApp(summary(d));
+    if (!prefilled) {
+      toast.info("WhatsApp opened without a prefilled message", {
+        description: `Please send: ${d.service} on ${d.date} at ${d.time}.`,
+      });
+    }
+    return prefilled;
+  };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,20 +108,22 @@ function Book() {
       return;
     }
     setConfirmed(data);
-    window.open(waLink(summary(data)), "_blank", "noopener");
-    toast.success("Appointment request confirmed", {
-      description: "Your details have been sent to our WhatsApp. We'll confirm your slot shortly.",
-    });
+    const prefilled = sendToWhatsApp(data);
+    if (prefilled) {
+      toast.success("Appointment request confirmed", {
+        description: `${data.service} — ${data.date} at ${data.time}. Sent to our WhatsApp.`,
+      });
+    }
   };
 
   const onWhatsApp = () => {
     const data = validate();
     if (!data) {
-      window.open(waLink(), "_blank", "noopener");
+      openWhatsApp();
       return;
     }
     setConfirmed(data);
-    window.open(waLink(summary(data)), "_blank", "noopener");
+    sendToWhatsApp(data);
   };
 
   const resetForm = () => {
@@ -194,7 +201,7 @@ function Book() {
                   type="button"
                   variant="whatsapp"
                   size="lg"
-                  onClick={() => window.open(waLink(summary(confirmed)), "_blank", "noopener")}
+                  onClick={() => sendToWhatsApp(confirmed)}
                 >
                   <MessageCircle /> Resend on WhatsApp
                 </Button>
