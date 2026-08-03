@@ -201,7 +201,7 @@ function Book() {
                   type="button"
                   variant="whatsapp"
                   size="lg"
-                  onClick={() => window.open(waLink(summary(confirmed)), "_blank", "noopener")}
+                  onClick={() => sendToWhatsApp(confirmed)}
                 >
                   <MessageCircle /> Resend on WhatsApp
                 </Button>
