@@ -16,6 +16,60 @@ export const SITE = {
 export const waLink = (message = "Hello Famart Healthcare, I would like to book an appointment.") =>
   `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(message)}`;
 
+/** Bare WhatsApp link with no prefilled text — always safe to open. */
+export const waPlainLink = `https://wa.me/${SITE.whatsapp}`;
+
+/** Builds a clean, readable booking message. */
+export const bookingMessage = (d: {
+  name?: string;
+  phone?: string;
+  email?: string;
+  service?: string;
+  date?: string;
+  time?: string;
+  message?: string;
+}) => {
+  const lines = [
+    "Hello Famart Healthcare, I would like to book an appointment.",
+    "",
+    d.name ? `Name: ${d.name}` : "",
+    d.phone ? `Phone: ${d.phone}` : "",
+    d.email ? `Email: ${d.email}` : "",
+    d.service ? `Service: ${d.service}` : "",
+    d.date ? `Preferred date: ${d.date}` : "",
+    d.time ? `Preferred time: ${d.time}` : "",
+    d.message ? `Message: ${d.message}` : "",
+  ].filter(Boolean);
+  return lines.join("\n");
+};
+
+/**
+ * Opens WhatsApp with the prefilled message. If the message cannot be
+ * prefilled (encoding issue, over-long URL, blocked popup), it falls back to a
+ * clean chat window so the patient is never left stranded.
+ */
+export const openWhatsApp = (message?: string): { prefilled: boolean } => {
+  const open = (url: string) => {
+    const w = typeof window !== "undefined" ? window.open(url, "_blank", "noopener") : null;
+    if (!w && typeof window !== "undefined") window.location.href = url;
+    return true;
+  };
+
+  if (message) {
+    try {
+      const url = waLink(message);
+      if (url.length <= 1800) {
+        open(url);
+        return { prefilled: true };
+      }
+    } catch {
+      /* fall through to the plain link */
+    }
+  }
+  open(waPlainLink);
+  return { prefilled: false };
+};
+
 export const telLink = `tel:${SITE.phone}`;
 
 export const mapsLink = `https://www.google.com/maps/search/?api=1&query=${SITE.mapsQuery}`;
