@@ -113,7 +113,7 @@ export function Footer() {
       <div className="border-t">
         <div className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-6 text-center text-xs text-muted-foreground sm:flex-row sm:justify-between sm:text-left">
           <p>© 2026 {SITE.name}. All Rights Reserved.</p>
-          <p>Developed by NextStep Solutions.</p>
+          <p>Developed by Apex Web Solutions.</p>
         </div>
       </div>
     </footer>
