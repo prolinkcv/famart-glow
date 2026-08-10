@@ -536,11 +536,11 @@ export interface OrderLine {
 }
 
 export interface OrderCustomer {
-  name?: string;
-  phone?: string;
-  fulfilment?: "Delivery" | "Pickup From Clinic";
-  location?: string;
-  notes?: string;
+  name?: string | undefined;
+  phone?: string | undefined;
+  fulfilment?: "Delivery" | "Pickup From Clinic" | undefined;
+  location?: string | undefined;
+  notes?: string | undefined;
 }
 
 /** Builds the WhatsApp order message from the cart plus optional customer details. */

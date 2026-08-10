@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, Phone, X } from "lucide-react";
+import { Menu, Phone, ShoppingCart, X } from "lucide-react";
 import logo from "@/assets/famart-logo-new.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { SITE, telLink } from "@/lib/site";
@@ -10,6 +10,7 @@ const nav = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
   { to: "/services", label: "Services" },
+  { to: "/shop", label: "Shop" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
@@ -66,6 +67,11 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
+          <Button asChild variant="ghost" size="sm">
+            <Link to="/cart" aria-label="View cart">
+              <ShoppingCart /> Cart
+            </Link>
+          </Button>
           <Button asChild variant="outline" size="sm">
             <a href={telLink}>
               <Phone /> Call Now
@@ -102,6 +108,13 @@ export function Header() {
                 {n.label}
               </Link>
             ))}
+            <Link
+              to="/cart"
+              onClick={() => setOpen(false)}
+              className="rounded-xl px-4 py-3 text-sm font-medium"
+            >
+              Cart
+            </Link>
             <div className="mt-2 grid grid-cols-2 gap-2">
               <Button asChild variant="outline">
                 <a href={telLink}>
