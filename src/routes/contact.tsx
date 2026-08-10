@@ -9,24 +9,24 @@ export const Route = createFileRoute("/contact")({
   component: Contact,
   head: () => ({
     meta: [
-      { title: "Contact Famart Healthcare | Skin Clinic at Odeon, Nairobi CBD" },
+      { title: "Contact Famart Healthcare | Pipeline opposite Honeysuckle gardens estate, Nairobi" },
       {
         name: "description",
         content:
-          "Visit Famart Healthcare Medical and Skin Clinic at Odeon Cinema, opposite Shell Petrol Station, Nairobi. Call +254 725 077 433. Open Monday to Friday, 9:00 AM to 5:00 PM.",
+          "Visit Famart Healthcare Medical and Skin Clinic at Pipeline opposite Honeysuckle gardens estate, Nairobi. Call +254708 931 682/ +254747 077 433. Open Monday to Friday, 9:00 AM to 5:00 PM.",
       },
       { property: "og:title", content: "Contact Famart Healthcare Medical and Skin Clinic" },
       {
         property: "og:description",
         content:
-          "Nairobi Town, Odeon Cinema, opposite Shell Petrol Station. Call or WhatsApp +254 725 077 433.",
+          "Pipeline opposite Honeysuckle gardens estate, Nairobi. Call or WhatsApp +254708 931 682/ +254747 077 433.",
       },
       { property: "og:url", content: "/contact" },
       { property: "og:type", content: "website" },
       { name: "twitter:title", content: "Contact Famart Healthcare Medical and Skin Clinic" },
       {
         name: "twitter:description",
-        content: "Nairobi CBD skin clinic — call or WhatsApp +254 725 077 433.",
+        content: "Nairobi CBD skin clinic — call or WhatsApp +254708 931 682/ +254747 077 433.",
       },
     ],
     links: [{ rel: "canonical", href: "/contact" }],
@@ -44,7 +44,7 @@ function Contact() {
             </span>
             <h1 className="mt-5 text-4xl font-bold text-balance sm:text-5xl">Visit our clinic</h1>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              We are easy to find in the heart of Nairobi CBD — and always happy to answer questions
+              We are easy to find in the heart of Nairobi — and always happy to answer questions
               before you come in.
             </p>
           </Reveal>
