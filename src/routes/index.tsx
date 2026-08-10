@@ -4,6 +4,7 @@ import heroImg from "@/assets/hero-derm.jpg";
 import clinicImg from "@/assets/clinic-interior.jpg";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/Reveal";
+import { FeaturedProducts } from "@/components/shop/FeaturedProducts";
 import {
   CtaBand,
   Faqs,
@@ -189,6 +190,10 @@ function Home() {
             </Button>
           </Reveal>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-20 lg:py-28">
+        <FeaturedProducts />
       </section>
 
       <section className="mx-auto max-w-7xl px-5 py-20 lg:py-28">

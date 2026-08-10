@@ -17,6 +17,7 @@ import { FloatingActions } from "@/components/FloatingActions";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { Toaster } from "@/components/ui/sonner";
 import { SITE, services } from "@/lib/site";
+import { CartProvider } from "@/lib/cart";
 
 function NotFoundComponent() {
   const topServices = services.slice(0, 6);
@@ -214,6 +215,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <CartProvider>
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
@@ -228,6 +230,7 @@ function RootComponent() {
       <Footer />
       <FloatingActions />
       <Toaster />
+      </CartProvider>
     </QueryClientProvider>
   );
 }
