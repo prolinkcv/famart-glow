@@ -14,7 +14,7 @@ import {
   Testimonials,
   WhyChooseUs,
 } from "@/components/sections";
-import { faqs, SITE, telLink conditionsTreated, } from "@/lib/site";
+import { conditionsTreated, faqs, SITE, telLink } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   component: Home,
