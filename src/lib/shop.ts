@@ -581,3 +581,71 @@ export const orderMessage = (lines: OrderLine[], customer: OrderCustomer = {}) =
     "Thank you.",
   ].join("\n");
 };
+
+/** Admin-managed settings that override the built-in catalogue values. */
+export interface ProductOverride {
+  slug: string;
+  priceKsh: number | null;
+  inStock: boolean | null;
+  imageUrl: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  rating: number | null;
+  reviewCount: number | null;
+  hidden: boolean;
+}
+
+export const emptyOverride = (slug: string): ProductOverride => ({
+  slug,
+  priceKsh: null,
+  inStock: null,
+  imageUrl: null,
+  seoTitle: null,
+  seoDescription: null,
+  rating: null,
+  reviewCount: null,
+  hidden: false,
+});
+
+/** Merges admin overrides over the built-in catalogue and drops hidden products. */
+export function applyOverrides(overrides: ProductOverride[]): Product[] {
+  const map = new Map(overrides.map((o) => [o.slug, o]));
+  return products
+    .filter((p) => !map.get(p.slug)?.hidden)
+    .map((p) => {
+      const o = map.get(p.slug);
+      if (!o) return p;
+      return {
+        ...p,
+        priceKsh: o.priceKsh ?? p.priceKsh,
+        inStock: o.inStock ?? p.inStock,
+        images: o.imageUrl ? [o.imageUrl, ...p.images.slice(1)] : p.images,
+        seoTitle: o.seoTitle ?? p.seoTitle,
+        seoDescription: o.seoDescription ?? p.seoDescription,
+        rating: o.rating ?? p.rating,
+        reviewCount: o.reviewCount ?? p.reviewCount,
+      };
+    });
+}
+
+export const categorySlug = (category: string) =>
+  category
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+export const categoryFromSlug = (slug: string) =>
+  shopCategories.find((c) => categorySlug(c) === slug);
+
+export const categoryCopy: Record<string, { title: string; description: string; intro: string }> =
+  Object.fromEntries(
+    shopCategories.map((c) => [
+      categorySlug(c),
+      {
+        title: `${c} in Nairobi | Famart Healthcare Skincare Shop`,
+        description: `Shop ${c.toLowerCase()} in Nairobi from Famart Healthcare Medical and Skin Clinic. Dermatology-led product guidance with easy WhatsApp ordering, delivery or clinic pickup.`,
+        intro: `Browse the ${c.toLowerCase()} stocked at our Nairobi dermatology clinic. Every product is chosen by our clinical team, and you can order on WhatsApp for delivery or pickup.`,
+      },
+    ]),
+  );

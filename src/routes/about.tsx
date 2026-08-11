@@ -8,24 +8,24 @@ export const Route = createFileRoute("/about")({
   component: About,
   head: () => ({
     meta: [
-      { title: "About Famart Healthcare | Skin & Dermatology Clinic in Nairobi CBD" },
+      { title: "About Famart Healthcare | Skin & Dermatology Clinic in Nairobi Pipeline" },
       {
         name: "description",
         content:
-          "Learn about Famart Healthcare Medical and Skin Clinic — a Nairobi CBD dermatology practice built on compassionate care, evidence-based treatment and personalised skin health plans.",
+          "Learn about Famart Healthcare Medical and Skin Clinic — a Nairobi Pipeline dermatology practice built on compassionate care, evidence-based treatment and personalised skin health plans.",
       },
       { property: "og:title", content: "About Famart Healthcare Medical and Skin Clinic" },
       {
         property: "og:description",
         content:
-          "A Nairobi CBD dermatology practice built on compassionate care, evidence-based treatment and personalised skin health plans.",
+          "A Nairobi Pipeline dermatology practice built on compassionate care, evidence-based treatment and personalised skin health plans.",
       },
       { property: "og:url", content: "/about" },
       { property: "og:type", content: "website" },
       { name: "twitter:title", content: "About Famart Healthcare Medical and Skin Clinic" },
       {
         name: "twitter:description",
-        content: "Compassionate, evidence-based dermatology care in Nairobi CBD.",
+        content: "Compassionate, evidence-based dermatology care in Nairobi Pipeline.",
       },
     ],
     links: [{ rel: "canonical", href: "/about" }],
@@ -60,7 +60,7 @@ function About() {
               Quality dermatology care, delivered with heart
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              {SITE.name} is a medical and skin clinic in Nairobi Town dedicated to helping patients
+              {SITE.name} is a medical and skin clinic in Nairobi Pipeline dedicated to helping patients
               achieve healthy, comfortable skin through expert diagnosis and modern treatment.
             </p>
           </Reveal>

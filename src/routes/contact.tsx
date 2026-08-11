@@ -26,7 +26,7 @@ export const Route = createFileRoute("/contact")({
       { name: "twitter:title", content: "Contact Famart Healthcare Medical and Skin Clinic" },
       {
         name: "twitter:description",
-        content: "Nairobi CBD skin clinic — call or WhatsApp +254708 931 682/ +254747 077 433.",
+        content: "Nairobi Pipeline skin clinic — call or WhatsApp +254708 931 682/ +254747 077 433.",
       },
     ],
     links: [{ rel: "canonical", href: "/contact" }],
@@ -78,8 +78,11 @@ function Contact() {
                 </span>
                 <span>
                   <span className="block font-semibold">Phone & WhatsApp</span>
-                  <a href={telLink} className="text-muted-foreground hover:text-primary">
+                  <a href={telLink} className="block text-muted-foreground hover:text-primary">
                     {SITE.phoneDisplay}
+                  </a>
+                  <a href={telLinkAlt} className="block text-muted-foreground hover:text-primary">
+                    {SITE.phoneAltDisplay}
                   </a>
                 </span>
               </li>

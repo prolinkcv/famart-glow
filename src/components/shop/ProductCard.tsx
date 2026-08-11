@@ -1,14 +1,17 @@
 import { Link } from "@tanstack/react-router";
-import { MessageCircle, ShoppingCart } from "lucide-react";
+import { Heart, MessageCircle, ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
 import { StarRating, StockBadge } from "@/components/shop/StarRating";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart";
+import { useWishlist } from "@/lib/wishlist";
 import { formatKsh, orderMessage, type Product } from "@/lib/shop";
 import { openWhatsApp } from "@/lib/site";
 
 export function ProductCard({ product }: { product: Product }) {
   const { add } = useCart();
+  const wishlist = useWishlist();
+  const saved = wishlist.has(product.slug);
 
   const orderNow = () => {
     const { prefilled } = openWhatsApp(
@@ -23,6 +26,21 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-3xl border bg-card shadow-soft transition-shadow duration-200 hover:shadow-lift">
+      <div className="relative">
+      <button
+        type="button"
+        aria-pressed={saved}
+        aria-label={saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
+        onClick={() => {
+          const added = wishlist.toggle(product.slug);
+          toast.success(added ? "Saved to wishlist" : "Removed from wishlist", {
+            description: product.name,
+          });
+        }}
+        className="absolute top-3 right-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full border bg-background/85 backdrop-blur transition-colors hover:text-brand-red"
+      >
+        <Heart className={saved ? "size-4 fill-current text-brand-red" : "size-4"} />
+      </button>
       <Link
         to="/shop/product/$slug"
         params={{ slug: product.slug }}
@@ -38,6 +56,7 @@ export function ProductCard({ product }: { product: Product }) {
           className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
         />
       </Link>
+      </div>
 
       <div className="flex flex-1 flex-col p-4 sm:p-5">
         <div className="flex items-start justify-between gap-2">

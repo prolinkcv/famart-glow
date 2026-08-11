@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MessageCircle, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import { CheckCircle2, MessageCircle, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,16 +39,10 @@ function CartPage() {
   );
   const [location, setLocation] = useState("");
   const [notes, setNotes] = useState("");
+  const [preview, setPreview] = useState<string | null>(null);
 
-  const sendOrder = () => {
-    if (detailed.length === 0) return;
-    if (fulfilment === "Delivery" && !location.trim()) {
-      toast.error("Delivery location needed", {
-        description: "Please tell us where the order should be delivered.",
-      });
-      return;
-    }
-    const message = orderMessage(
+  const buildMessage = () =>
+    orderMessage(
       detailed.map((d) => ({
         name: d.product.name,
         quantity: d.quantity,
@@ -62,7 +56,29 @@ function CartPage() {
         notes: notes.trim() || undefined,
       },
     );
+
+  const reviewOrder = () => {
+    if (detailed.length === 0) return;
+    if (fulfilment === "Delivery" && !location.trim()) {
+      toast.error("Delivery location needed", {
+        description: "Please tell us where the order should be delivered.",
+      });
+      return;
+    }
+    setPreview(buildMessage());
+  };
+
+  const sendOrder = () => {
+    if (detailed.length === 0) return;
+    if (fulfilment === "Delivery" && !location.trim()) {
+      toast.error("Delivery location needed", {
+        description: "Please tell us where the order should be delivered.",
+      });
+      return;
+    }
+    const message = preview ?? buildMessage();
     const { prefilled } = openWhatsApp(message);
+    setPreview(null);
     if (!prefilled) {
       toast.message("WhatsApp opened without your order details", {
         description: "Please paste or describe your items in the chat and we will confirm.",
@@ -255,12 +271,70 @@ function CartPage() {
                 </div>
               </div>
 
-              <Button className="mt-6 w-full" variant="hero" size="lg" onClick={sendOrder}>
+              <Button className="mt-6 w-full" variant="hero" size="lg" onClick={reviewOrder}>
                 <MessageCircle /> Order via WhatsApp
               </Button>
               <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
                 {SHOP_DISCLAIMER}
               </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {preview && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Confirm your order"
+          className="fixed inset-0 z-50 grid place-items-center bg-foreground/40 p-4 backdrop-blur-sm"
+        >
+          <div className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-3xl border bg-card p-6 shadow-lift">
+            <div className="flex items-start gap-3">
+              <CheckCircle2 className="mt-0.5 size-6 shrink-0 text-primary" aria-hidden="true" />
+              <div>
+                <h2 className="font-display text-lg font-semibold">Confirm your order</h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  This is the exact message we will send to Famart Healthcare on WhatsApp.
+                </p>
+              </div>
+            </div>
+
+            <dl className="mt-5 space-y-2 rounded-2xl border bg-surface p-4 text-sm">
+              <div className="flex justify-between">
+                <dt className="text-muted-foreground">Items</dt>
+                <dd className="font-medium">{count}</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-muted-foreground">Fulfilment</dt>
+                <dd className="font-medium">{fulfilment}</dd>
+              </div>
+              {fulfilment === "Delivery" && location.trim() && (
+                <div className="flex justify-between gap-4">
+                  <dt className="text-muted-foreground">Delivery to</dt>
+                  <dd className="text-right font-medium">{location.trim()}</dd>
+                </div>
+              )}
+              <div className="flex justify-between border-t pt-2 text-base">
+                <dt className="font-semibold">Total</dt>
+                <dd className="font-display font-bold text-primary">{formatKsh(total)}</dd>
+              </div>
+            </dl>
+
+            <p className="mt-4 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+              WhatsApp message preview
+            </p>
+            <pre className="mt-2 max-h-56 overflow-auto rounded-2xl border bg-surface p-4 text-xs leading-relaxed whitespace-pre-wrap">
+              {preview}
+            </pre>
+
+            <div className="mt-6 grid gap-2 sm:grid-cols-2">
+              <Button variant="outline" size="lg" onClick={() => setPreview(null)}>
+                Keep editing
+              </Button>
+              <Button variant="hero" size="lg" onClick={sendOrder}>
+                <MessageCircle /> Send on WhatsApp
+              </Button>
             </div>
           </div>
         </div>

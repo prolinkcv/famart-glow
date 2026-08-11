@@ -11,20 +11,20 @@ export const Route = createFileRoute("/services/")({
       {
         name: "description",
         content:
-          "Explore Famart Healthcare's dermatology services in Nairobi CBD: acne treatment, eczema management, psoriasis care, skin allergies, fungal infections, pigmentation, mole assessment and more.",
+          "Explore Famart Healthcare's dermatology services in Nairobi Pipeline: acne treatment, eczema management, psoriasis care, skin allergies, fungal infections, pigmentation, mole assessment and more.",
       },
       { property: "og:title", content: "Dermatology Services in Nairobi | Famart Healthcare" },
       {
         property: "og:description",
         content:
-          "Acne, eczema, psoriasis, allergies, pigmentation, hair and scalp care and general dermatology in Nairobi CBD.",
+          "Acne, eczema, psoriasis, allergies, pigmentation, hair and scalp care and general dermatology in Nairobi Pipeline.",
       },
       { property: "og:url", content: "/services" },
       { property: "og:type", content: "website" },
       { name: "twitter:title", content: "Dermatology Services in Nairobi | Famart Healthcare" },
       {
         name: "twitter:description",
-        content: "15 dermatology and skin care services offered in Nairobi CBD.",
+        content: "15 dermatology and skin care services offered in Nairobi Pipeline.",
       },
     ],
     links: [{ rel: "canonical", href: "/services" }],
@@ -65,7 +65,7 @@ function Services() {
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
               Fifteen focused services covering medical dermatology, cosmetic skin care and ongoing
-              follow-up — all delivered from our Nairobi CBD clinic.
+              follow-up — all delivered from our Nairobi Pipeline clinic.
             </p>
           </Reveal>
         </div>

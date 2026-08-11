@@ -21,19 +21,19 @@ export const Route = createFileRoute("/book")({
       {
         name: "description",
         content:
-          "Book a dermatology appointment at Famart Healthcare Medical and Skin Clinic in Nairobi CBD. Choose your date, time and service, or book instantly on WhatsApp.",
+          "Book a dermatology appointment at Famart Healthcare Medical and Skin Clinic in Nairobi Pipeline. Choose your date, time and service, or book instantly on WhatsApp.",
       },
       { property: "og:title", content: "Book an Appointment | Famart Healthcare Nairobi" },
       {
         property: "og:description",
-        content: "Reserve your dermatology consultation in Nairobi CBD online or via WhatsApp.",
+        content: "Reserve your dermatology consultation in Nairobi Pipeline online or via WhatsApp.",
       },
       { property: "og:url", content: "/book" },
       { property: "og:type", content: "website" },
       { name: "twitter:title", content: "Book an Appointment | Famart Healthcare Nairobi" },
       {
         name: "twitter:description",
-        content: "Reserve your dermatology consultation in Nairobi CBD online or via WhatsApp.",
+        content: "Reserve your dermatology consultation in Nairobi Pipeline online or via WhatsApp.",
       },
     ],
     links: [{ rel: "canonical", href: "/book" }],

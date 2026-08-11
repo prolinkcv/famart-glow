@@ -1,6 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
-import { getProduct, type Product } from "@/lib/shop";
+import { useProducts } from "@/lib/products";
+import type { Product } from "@/lib/shop";
+
 
 export interface CartItem {
   slug: string;
@@ -22,7 +24,9 @@ const CartContext = createContext<CartContextValue | null>(null);
 const STORAGE_KEY = "famart-cart-v1";
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const { getProduct } = useProducts();
   const [items, setItems] = useState<CartItem[]>([]);
+
 
   // Hydrate from localStorage after mount so SSR and first render match.
   useEffect(() => {
@@ -64,7 +68,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       return [...prev, { slug, quantity: Math.min(99, Math.max(1, quantity)) }];
     });
-  }, []);
+  }, [getProduct]);
 
   const setQuantity = useCallback((slug: string, quantity: number) => {
     setItems((prev) =>
@@ -96,7 +100,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       remove,
       clear,
     };
-  }, [items, add, setQuantity, remove, clear]);
+  }, [items, getProduct, add, setQuantity, remove, clear]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

@@ -2,15 +2,17 @@ export const SITE = {
   name: "Famart Healthcare Medical and Skin Clinic",
   shortName: "Famart Healthcare",
   tagline: "Medical and Skin Clinic",
-  phone: "+254725077433",
-  phoneDisplay: "+254 725 077 433",
+  phone: "+254708931682",
+  phoneDisplay: "+254 708 931 682",
+  phoneAlt: "+254747077433",
+  phoneAltDisplay: "+254 747 077 433",
   whatsapp: "254725077433",
   email: "info@famarthealthcare.co.ke",
-  address: "Nairobi Town, Odeon Cinema, Opposite Shell Petrol Station",
+  address: "Nairobi Pipeline, opposite Honeysuckle Gardens Estate",
   city: "Nairobi",
   country: "Kenya",
   hours: "Monday – Friday, 9:00 AM – 5:00 PM",
-  mapsQuery: "Odeon+Cinema+Nairobi+Kenya",
+  mapsQuery: "Honeysuckle+Gardens+Estate+Pipeline+Nairobi+Kenya",
 } as const;
 
 export const waLink = (message = "Hello Famart Healthcare, I would like to book an appointment.") =>
@@ -71,6 +73,7 @@ export const openWhatsApp = (message?: string): { prefilled: boolean } => {
 };
 
 export const telLink = `tel:${SITE.phone}`;
+export const telLinkAlt = `tel:${SITE.phoneAlt}`;
 
 export const mapsLink = `https://www.google.com/maps/search/?api=1&query=${SITE.mapsQuery}`;
 
@@ -90,6 +93,14 @@ export const services = [
   { slug: "wart-removal", name: "Wart Removal", icon: "Zap", desc: "Quick in-clinic removal of warts, skin tags and small growths." },
   { slug: "skin-infection-treatment", name: "Skin Infection Treatment", icon: "Syringe", desc: "Prompt care for bacterial, viral and inflammatory skin infections." },
   { slug: "patient-follow-up", name: "Patient Follow-up", icon: "CalendarCheck", desc: "Structured review visits so your treatment keeps working." },
+  { slug: "dark-spots-treatment", name: "Dark Spots Treatment", icon: "CircleDot", desc: "Fade dark spots, post-acne marks and uneven patches with medical-grade care." },
+  { slug: "genital-wart-treatment", name: "Genital Warts Treatment", icon: "ShieldCheck", desc: "Discreet, confidential treatment of genital and common warts." },
+  { slug: "herpes-treatment", name: "Herpes Treatment", icon: "Shield", desc: "Confidential management of cold sores and genital herpes outbreaks." },
+  { slug: "skin-tag-removal", name: "Skin Tag Removal", icon: "Scissors", desc: "Laser or medical removal of skin tags, quickly and safely." },
+  { slug: "stretch-mark-removal", name: "Stretch Marks Treatment", icon: "Waves", desc: "Laser treatment to soften and fade stretch marks on body and abdomen." },
+  { slug: "keloid-treatment", name: "Keloid & Scar Treatment", icon: "Bandage", desc: "Flatten and calm keloids and hypertrophic scars with clinical therapy." },
+  { slug: "cracked-feet-treatment", name: "Cracked Feet Treatment", icon: "Footprints", desc: "Heal painful heel fissures and cracked feet with a medical foot-care plan." },
+  { slug: "laser-services", name: "Laser Services", icon: "Zap", desc: "In-clinic laser treatment for skin tags, stretch marks, scars and more." },
 ] as const;
 
 export const whyChooseUs = [
@@ -97,7 +108,7 @@ export const whyChooseUs = [
   { icon: "HeartHandshake", title: "Patient-Centered Care", desc: "We listen first, then build care around you." },
   { icon: "Microscope", title: "Modern Treatment", desc: "Current protocols and modern clinical practice." },
   { icon: "Wallet", title: "Affordable Services", desc: "Transparent, fair pricing for quality dermatology." },
-  { icon: "MapPin", title: "Convenient CBD Location", desc: "Easy to reach in the heart of Nairobi CBD." },
+  { icon: "MapPin", title: "Convenient Pipeline Location", desc: "Easy to reach in Pipeline, opposite Honeysuckle Gardens Estate." },
   { icon: "BookOpenCheck", title: "Evidence-Based Medicine", desc: "Treatments backed by clinical evidence." },
   { icon: "Timer", title: "Fast Appointments", desc: "Short waiting times and same-week slots." },
   { icon: "BadgeCheck", title: "Quality Healthcare", desc: "Consistent standards at every single visit." },
@@ -109,7 +120,7 @@ export const testimonials = [
   { name: "Aisha K.", text: "Clean clinic, warm staff and very affordable. The follow-up visit showed they genuinely care." },
   { name: "Peter N.", text: "Booked on WhatsApp and was seen the same week. Excellent eczema care for my son." },
   { name: "Faith C.", text: "The pigmentation treatment changed my confidence completely. Highly professional service." },
-  { name: "Samuel G.", text: "Convenient CBD location and no long queues. This is how healthcare should feel." },
+  { name: "Samuel G.", text: "Convenient Pipeline location and no long queues. This is how healthcare should feel." },
 ] as const;
 
 export const faqs = [
@@ -117,7 +128,7 @@ export const faqs = [
   { q: "What skin conditions do you treat?", a: "We treat acne, eczema, psoriasis, skin allergies, fungal infections, unexplained rashes, pigmentation disorders, hair and scalp conditions, warts, moles, skin infections and more." },
   { q: "How long does treatment take?", a: "A first consultation usually takes 20–30 minutes. Treatment length depends on the condition — some infections resolve in one to two weeks, while chronic conditions such as eczema or psoriasis are managed with a longer-term plan and review visits." },
   { q: "Do you accept walk-in patients?", a: "Yes. Walk-in patients are welcome during working hours, Monday to Friday, 9:00 AM to 5:00 PM. Booked patients are attended to first, so booking ahead reduces your waiting time." },
-  { q: "Where are you located?", a: "We are in Nairobi Town at Odeon Cinema, opposite the Shell Petrol Station — easily accessible from anywhere in the CBD." },
+  { q: "Where are you located?", a: "We are in Nairobi Pipeline, opposite Honeysuckle Gardens Estate — easy to reach from Embakasi, South B, Imara Daima, Fedha and the wider Nairobi area." },
 ] as const;
 
 export type ServiceDetail = {
@@ -128,9 +139,137 @@ export type ServiceDetail = {
 };
 
 const cta = (name: string) =>
-  `Book a ${name.toLowerCase()} consultation at our Nairobi CBD clinic and get a clear, personalised plan.`;
+  `Book a ${name.toLowerCase()} consultation at our Nairobi Pipeline clinic and get a clear, personalised plan.`;
 
 export const serviceDetails: Record<string, ServiceDetail> = {
+  "dark-spots-treatment": {
+    headline: "Dark Spots and Hyperpigmentation Treatment in Nairobi",
+    intro:
+      "Dark spots from acne, insect bites, shaving or sun exposure can take years to fade on their own. Our dermatological skin care clinic in Nairobi Pipeline assesses what caused the pigmentation and builds a safe fading plan that protects your natural skin tone.",
+    benefits: [
+      "Treatment for post-acne marks and dark spots",
+      "Melasma and sun-related pigmentation care",
+      "Safe, skin-tone appropriate lightening protocols",
+      "Sunscreen and maintenance routines that hold results",
+    ],
+    faqs: [
+      { q: "How long do dark spots take to fade?", a: "Most patients see visible improvement in 8–12 weeks. Deeper pigmentation takes longer and is reviewed at follow-up visits." },
+      { q: "Are skin lightening creams safe?", a: "Unregulated bleaching creams damage skin. We only prescribe medically approved treatment at safe strengths." },
+      { q: "Will the dark spots come back?", a: "Not if the cause is treated and you use daily sun protection, which we include in every plan." },
+    ],
+  },
+  "genital-wart-treatment": {
+    headline: "Warts and Genital Warts Treatment in Nairobi",
+    intro:
+      "Warts are caused by a virus and spread easily if left untreated. We remove common, plantar and genital warts using laser or medical treatment, in a private, judgement-free consultation at our Nairobi Pipeline clinic.",
+    benefits: [
+      "Removal of common, plantar and genital warts",
+      "Laser and medical treatment options",
+      "Completely confidential consultation",
+      "Advice on preventing spread and recurrence",
+    ],
+    faqs: [
+      { q: "Is the treatment painful?", a: "We numb the area first, so most people describe only mild discomfort during removal." },
+      { q: "Is my visit confidential?", a: "Yes. Genital wart consultations are private and your information is never shared." },
+      { q: "Can warts come back?", a: "The virus can persist, so we review you after treatment and treat any new lesions early." },
+    ],
+  },
+  "herpes-treatment": {
+    headline: "Herpes Treatment in Nairobi",
+    intro:
+      "Cold sores and genital herpes are common and very treatable. Our clinicians confirm the diagnosis, settle the current outbreak quickly and set up a plan that reduces how often outbreaks return.",
+    benefits: [
+      "Fast relief for painful herpes outbreaks",
+      "Cold sore and genital herpes care",
+      "Suppressive therapy for frequent recurrences",
+      "Confidential, respectful consultations",
+    ],
+    faqs: [
+      { q: "How quickly does treatment work?", a: "Antiviral treatment started early usually shortens an outbreak to a few days." },
+      { q: "Can herpes be cured?", a: "The virus stays in the body, but treatment controls outbreaks so well that many patients rarely get them." },
+      { q: "Is my consultation private?", a: "Yes, entirely confidential." },
+    ],
+  },
+  "skin-tag-removal": {
+    headline: "Skin Tag Removal in Nairobi (Laser or Medical)",
+    intro:
+      "Skin tags on the neck, underarms, eyelids and body are harmless but often uncomfortable or unwanted. We remove them in-clinic using laser or medical treatment, with minimal downtime and careful attention to scarring.",
+    benefits: [
+      "Laser and medical skin tag removal",
+      "Safe removal around the neck, underarms and eyelids",
+      "Quick in-clinic procedure",
+      "Aftercare that minimises marks",
+    ],
+    faqs: [
+      { q: "How long does removal take?", a: "Most sessions take 15–30 minutes depending on how many tags are removed." },
+      { q: "Will it leave a scar?", a: "Correctly performed removal usually heals with no visible mark, and we give aftercare to protect the skin." },
+      { q: "Do skin tags grow back?", a: "A removed tag does not return, though new ones can form elsewhere." },
+    ],
+  },
+  "stretch-mark-removal": {
+    headline: "Stretch Marks Laser Treatment in Nairobi",
+    intro:
+      "Stretch marks on the abdomen, thighs, hips and arms respond well to laser treatment. We assess how old and how deep the marks are, then use laser therapy to improve their colour and texture over a course of sessions.",
+    benefits: [
+      "Laser treatment for old and new stretch marks",
+      "Care for post-pregnancy and weight-change marks",
+      "Improves colour, texture and skin tone",
+      "A clear session plan with realistic expectations",
+    ],
+    faqs: [
+      { q: "Do stretch marks disappear completely?", a: "They fade significantly and become much less visible, but complete erasure is not realistic — we are honest about this at your consultation." },
+      { q: "How many sessions will I need?", a: "Most patients need a course of sessions spaced a few weeks apart; we confirm the number after examining your skin." },
+      { q: "Is laser treatment safe on dark skin?", a: "Yes, when settings are chosen correctly for your skin tone, which is part of our assessment." },
+    ],
+  },
+  "keloid-treatment": {
+    headline: "Keloid and Hypertrophic Scar Treatment in Nairobi",
+    intro:
+      "Keloids and raised hypertrophic scars can be itchy, painful and distressing. We flatten and soften them using clinical therapy tailored to the scar's age, size and location, and help prevent new keloids from forming.",
+    benefits: [
+      "Treatment for keloids on the ears, chest, back and shoulders",
+      "Care for raised hypertrophic and surgical scars",
+      "Relief from itching, tenderness and pain",
+      "Prevention advice for keloid-prone skin",
+    ],
+    faqs: [
+      { q: "Can keloids be removed permanently?", a: "Keloids can recur, so we combine treatment with prevention and review you regularly to keep them flat." },
+      { q: "Do you treat keloids from ear piercing?", a: "Yes, ear keloids are one of the most common cases we see." },
+      { q: "How many sessions are needed?", a: "Most keloids need a course of treatment over several weeks; we set out the plan at your first visit." },
+    ],
+  },
+  "cracked-feet-treatment": {
+    headline: "Cracked Feet and Heel Fissure Treatment in Nairobi",
+    intro:
+      "Cracked heels are more than a cosmetic problem — deep fissures are painful and can become infected. We treat the cracks, identify the underlying cause such as fungal infection, eczema or diabetes-related dryness, and put a foot-care routine in place.",
+    benefits: [
+      "Treatment for painful heel fissures",
+      "Diagnosis of the underlying cause",
+      "Care for fungal and eczema-related foot problems",
+      "A practical daily foot-care routine",
+    ],
+    faqs: [
+      { q: "Why do my heels keep cracking?", a: "Common causes include very dry skin, fungal infection, eczema, prolonged standing and diabetes. Treating the cause is what stops it returning." },
+      { q: "How soon will my feet heal?", a: "Most patients feel relief within days and see healing over two to four weeks." },
+      { q: "Do you treat diabetic foot problems?", a: "We assess and treat the skin, and we refer promptly where wider diabetic foot care is needed." },
+    ],
+  },
+  "laser-services": {
+    headline: "Laser Skin Treatment Services in Nairobi",
+    intro:
+      "Our clinic offers in-clinic laser treatment for skin tags, stretch marks, scars, warts and other skin concerns. Every laser session starts with a clinical assessment so the treatment and settings are matched to your skin type.",
+    benefits: [
+      "Laser skin tag and wart removal",
+      "Laser treatment for stretch marks and scars",
+      "Settings matched to your skin tone",
+      "Clinical assessment before every session",
+    ],
+    faqs: [
+      { q: "Is laser treatment safe for African skin?", a: "Yes, when the device settings are correctly matched to your skin type — which is exactly why every session begins with an assessment." },
+      { q: "Is it painful?", a: "Most patients describe a warm snapping sensation. Numbing is used where needed." },
+      { q: "How much downtime is there?", a: "Most people return to normal activity the same day, with simple aftercare for a few days." },
+    ],
+  },
   "acne-treatment": {
     headline: "Acne Treatment in Nairobi",
     intro:
@@ -374,3 +513,20 @@ export const serviceDetails: Record<string, ServiceDetail> = {
 };
 
 export const serviceCta = cta;
+
+/** Conditions the clinic treats — used for SEO-focused listings. */
+export const conditionsTreated = [
+  { name: "Eczema", slug: "eczema-management" },
+  { name: "Psoriasis", slug: "psoriasis-treatment" },
+  { name: "Fungal infections (dandruff, ringworm)", slug: "fungal-skin-infections" },
+  { name: "Pigmentation disorders (vitiligo, melasma)", slug: "pigmentation-disorders" },
+  { name: "Acne and pimples", slug: "acne-treatment" },
+  { name: "Dark spots", slug: "dark-spots-treatment" },
+  { name: "Warts including genital warts", slug: "genital-wart-treatment" },
+  { name: "Herpes", slug: "herpes-treatment" },
+  { name: "Skin tags (laser or medical treatment)", slug: "skin-tag-removal" },
+  { name: "Stretch marks (laser treatment)", slug: "stretch-mark-removal" },
+  { name: "Keloids and hypertrophic scars", slug: "keloid-treatment" },
+  { name: "Cracked feet", slug: "cracked-feet-treatment" },
+  { name: "Laser services", slug: "laser-services" },
+] as const;
