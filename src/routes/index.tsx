@@ -14,7 +14,7 @@ import {
   Testimonials,
   WhyChooseUs,
 } from "@/components/sections";
-import { faqs, SITE, telLink } from "@/lib/site";
+import { faqs, SITE, telLink conditionsTreated, } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -189,6 +189,30 @@ function Home() {
               <Link to="/services">View All 15 Services</Link>
             </Button>
           </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-surface py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-5">
+          <SectionHeading
+            eyebrow="Conditions We Treat"
+            title="A dermatological skin care clinic in Nairobi Pipeline"
+            subtitle="We diagnose and treat the full range of skin conditions — from eczema and acne to keloids, warts and laser services."
+          />
+          <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {conditionsTreated.map((c) => (
+              <li key={c.slug}>
+                <Link
+                  to="/services/$slug"
+                  params={{ slug: c.slug }}
+                  className="flex h-full items-center gap-3 rounded-2xl border bg-card px-5 py-4 text-sm font-medium shadow-soft transition-colors hover:border-primary hover:text-primary"
+                >
+                  <span className="text-primary">✓</span>
+                  {c.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
