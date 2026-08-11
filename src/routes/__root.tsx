@@ -18,6 +18,10 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { Toaster } from "@/components/ui/sonner";
 import { SITE, services } from "@/lib/site";
 import { CartProvider } from "@/lib/cart";
+import { ProductsProvider } from "@/lib/products";
+import { WishlistProvider } from "@/lib/wishlist";
+import { getProductOverrides } from "@/lib/shop.functions";
+
 
 function NotFoundComponent() {
   const topServices = services.slice(0, 6);
@@ -133,7 +137,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Famart Healthcare Medical and Skin Clinic offers expert dermatology consultation, acne treatment, eczema care and professional skin care in Nairobi CBD.",
+          "Famart Healthcare Medical and Skin Clinic offers expert dermatology consultation, acne treatment, eczema care and professional skin care in Nairobi Pipeline.",
       },
       {
         name: "keywords",
@@ -165,7 +169,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@type": ["MedicalClinic", "LocalBusiness"],
           name: SITE.name,
           description:
-            "Dermatology and skin care clinic in Nairobi CBD offering acne, eczema, psoriasis, allergy and general dermatology treatment.",
+            "Dermatology and skin care clinic in Nairobi Pipeline offering acne, eczema, psoriasis, allergy and general dermatology treatment.",
           medicalSpecialty: "Dermatology",
           telephone: SITE.phone,
           email: SITE.email,
@@ -190,6 +194,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
   }),
+  loader: () => getProductOverrides(),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -212,10 +217,13 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const overrides = Route.useLoaderData();
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ProductsProvider overrides={overrides ?? []}>
       <CartProvider>
+      <WishlistProvider>
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
@@ -230,7 +238,9 @@ function RootComponent() {
       <Footer />
       <FloatingActions />
       <Toaster />
+      </WishlistProvider>
       </CartProvider>
+      </ProductsProvider>
     </QueryClientProvider>
   );
 }

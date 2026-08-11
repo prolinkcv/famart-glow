@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Clock, Facebook, Instagram, Linkedin, MapPin, Phone, Mail } from "lucide-react";
 import logo from "@/assets/famart-logo-new.png.asset.json";
-import { SITE, mapsLink, services, telLink } from "@/lib/site";
+import { SITE, mapsLink, services, telLink, telLinkAlt } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -17,7 +17,7 @@ export function Footer() {
             className="h-20 w-20 object-contain"
           />
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-            Expert dermatology, skin care and medical consultation in the heart of Nairobi CBD —
+            Expert dermatology, skin care and medical consultation in the heart of Nairobi Pipeline —
             compassionate, evidence-based and patient-centered.
           </p>
           <div className="mt-5 flex gap-2">
@@ -46,6 +46,7 @@ export function Footer() {
               { to: "/about", label: "About Us" },
               { to: "/services", label: "Services" },
               { to: "/shop", label: "Skincare Shop" },
+              { to: "/wishlist", label: "Wishlist" },
               { to: "/book", label: "Book Appointment" },
               { to: "/contact", label: "Contact" },
             ].map((l) => (
@@ -86,9 +87,14 @@ export function Footer() {
             </li>
             <li className="flex gap-3">
               <Phone className="mt-0.5 size-4 shrink-0 text-primary" />
-              <a href={telLink} className="hover:text-primary">
-                {SITE.phoneDisplay}
-              </a>
+              <span>
+                <a href={telLink} className="block hover:text-primary">
+                  {SITE.phoneDisplay}
+                </a>
+                <a href={telLinkAlt} className="block hover:text-primary">
+                  {SITE.phoneAltDisplay}
+                </a>
+              </span>
             </li>
             <li className="flex gap-3">
               <Mail className="mt-0.5 size-4 shrink-0 text-primary" />

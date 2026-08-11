@@ -3,9 +3,10 @@ import { ProductCard } from "@/components/shop/ProductCard";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/sections";
 import { Button } from "@/components/ui/button";
-import { products } from "@/lib/shop";
+import { useProducts } from "@/lib/products";
 
 export function FeaturedProducts() {
+  const { products } = useProducts();
   const featured = products.filter((p) => p.featured).slice(0, 4);
 
   return (

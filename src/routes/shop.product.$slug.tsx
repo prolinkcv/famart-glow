@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Check, ChevronLeft, MessageCircle, Minus, Plus, ShoppingCart } from "lucide-react";
+import { Check, ChevronLeft, Heart, MessageCircle, Minus, Plus, ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
 import { StarRating, StockBadge } from "@/components/shop/StarRating";
 import { ProductCard } from "@/components/shop/ProductCard";
@@ -12,13 +12,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useCart } from "@/lib/cart";
-import {
-  formatKsh,
-  getProduct,
-  orderMessage,
-  products,
-  SHOP_DISCLAIMER,
-} from "@/lib/shop";
+import { useProducts } from "@/lib/products";
+import { useWishlist } from "@/lib/wishlist";
+import { formatKsh, getProduct, orderMessage, SHOP_DISCLAIMER } from "@/lib/shop";
 import { openWhatsApp, services } from "@/lib/site";
 
 export const Route = createFileRoute("/shop/product/$slug")({
@@ -91,8 +87,11 @@ export const Route = createFileRoute("/shop/product/$slug")({
 
 function ProductPage() {
   const { slug } = Route.useLoaderData();
-  const product = getProduct(slug)!;
+  const { products, getProduct: getMerged } = useProducts();
+  const product = getMerged(slug) ?? getProduct(slug)!;
   const { add } = useCart();
+  const wishlist = useWishlist();
+  const saved = wishlist.has(product.slug);
   const [qty, setQty] = useState(1);
   const [active, setActive] = useState(0);
 
@@ -258,9 +257,25 @@ function ProductPage() {
                   <MessageCircle /> Order via WhatsApp
                 </Button>
               </div>
-              <Button asChild variant="outline" size="lg" className="w-full">
-                <Link to="/cart">View Cart</Link>
-              </Button>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  aria-pressed={saved}
+                  onClick={() => {
+                    const added = wishlist.toggle(product.slug);
+                    toast.success(added ? "Saved to wishlist" : "Removed from wishlist", {
+                      description: product.name,
+                    });
+                  }}
+                >
+                  <Heart className={saved ? "fill-current text-brand-red" : ""} />
+                  {saved ? "Saved to Wishlist" : "Save to Wishlist"}
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <Link to="/cart">View Cart</Link>
+                </Button>
+              </div>
             </div>
           ) : (
             <div className="mt-7 rounded-2xl border bg-surface p-5">
@@ -340,7 +355,7 @@ function ProductPage() {
       <section className="mt-14 rounded-[2rem] border bg-card p-8 text-center shadow-soft sm:p-10">
         <h2 className="text-xl font-bold sm:text-2xl">Need professional skin advice?</h2>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          Our clinicians in Nairobi CBD can review your skin and recommend a suitable routine before
+          Our clinicians in Nairobi Pipeline can review your skin and recommend a suitable routine before
           you buy.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">

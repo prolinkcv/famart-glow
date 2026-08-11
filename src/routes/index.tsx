@@ -14,7 +14,7 @@ import {
   Testimonials,
   WhyChooseUs,
 } from "@/components/sections";
-import { faqs, SITE, telLink } from "@/lib/site";
+import { conditionsTreated, faqs, SITE, telLink } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Famart Healthcare Medical and Skin Clinic offers expert dermatology consultation, acne treatment, eczema care, psoriasis management, skin allergy treatment and professional skin care services in Nairobi CBD.",
+          "Famart Healthcare Medical and Skin Clinic offers expert dermatology consultation, acne treatment, eczema care, psoriasis management, skin allergy treatment and professional skin care services in Nairobi Pipeline.",
       },
       {
         property: "og:title",
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Expert dermatology consultation, acne, eczema, psoriasis and skin allergy treatment in Nairobi CBD.",
+          "Expert dermatology consultation, acne, eczema, psoriasis and skin allergy treatment in Nairobi Pipeline.",
       },
       { property: "og:url", content: "/" },
       { property: "og:type", content: "website" },
@@ -44,7 +44,7 @@ export const Route = createFileRoute("/")({
       {
         name: "twitter:description",
         content:
-          "Expert dermatology consultation, acne, eczema, psoriasis and skin allergy treatment in Nairobi CBD.",
+          "Expert dermatology consultation, acne, eczema, psoriasis and skin allergy treatment in Nairobi Pipeline.",
       },
     ],
     links: [
@@ -82,13 +82,13 @@ function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-16 lg:grid-cols-2 lg:py-24">
           <Reveal className="reveal-in">
             <span className="inline-flex items-center gap-2 rounded-full border bg-background/70 px-4 py-1.5 text-xs font-semibold tracking-wide text-primary">
-              Dermatology & Skin Care · Nairobi CBD
+              Dermatology & Skin Care · Nairobi Pipeline
             </span>
             <h1 className="mt-6 text-4xl leading-[1.08] font-bold text-balance sm:text-5xl lg:text-6xl">
               Healthy Skin Starts With <span className="text-gradient-brand">Expert Care</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              Professional Dermatology, Skin Care and Medical Consultation in Nairobi CBD.
+              Professional Dermatology, Skin Care and Medical Consultation in Nairobi Pipeline.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="hero" size="xl">
@@ -192,6 +192,30 @@ function Home() {
         </div>
       </section>
 
+      <section className="bg-surface py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-5">
+          <SectionHeading
+            eyebrow="Conditions We Treat"
+            title="A dermatological skin care clinic in Nairobi Pipeline"
+            subtitle="We diagnose and treat the full range of skin conditions — from eczema and acne to keloids, warts and laser services."
+          />
+          <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {conditionsTreated.map((c) => (
+              <li key={c.slug}>
+                <Link
+                  to="/services/$slug"
+                  params={{ slug: c.slug }}
+                  className="flex h-full items-center gap-3 rounded-2xl border bg-card px-5 py-4 text-sm font-medium shadow-soft transition-colors hover:border-primary hover:text-primary"
+                >
+                  <span className="text-primary">✓</span>
+                  {c.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-7xl px-5 py-20 lg:py-28">
         <FeaturedProducts />
       </section>
@@ -215,7 +239,7 @@ function Home() {
           <SectionHeading
             eyebrow="Testimonials"
             title="What our patients say"
-            subtitle="Real experiences from people we have cared for at our Nairobi CBD clinic."
+            subtitle="Real experiences from people we have cared for at our Nairobi Pipeline clinic."
           />
           <div className="mt-14">
             <Testimonials />

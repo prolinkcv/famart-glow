@@ -162,7 +162,7 @@ export function CtaBand() {
         Ready to take care of your skin?
       </h2>
       <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-        Book a consultation with our dermatology team in Nairobi CBD. Same-week appointments are
+        Book a consultation with our dermatology team in Nairobi Pipeline. Same-week appointments are
         usually available.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">

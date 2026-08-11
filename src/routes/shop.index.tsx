@@ -14,8 +14,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useProducts } from "@/lib/products";
 import {
-  products,
+  categorySlug,
+  products as catalogue,
   shopCategories,
   skinTypeOptions,
   SHOP_DISCLAIMER,
@@ -48,7 +50,7 @@ export const Route = createFileRoute("/shop/")({
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "Skincare products at Famart Healthcare",
-          itemListElement: products.map((p, i) => ({
+          itemListElement: catalogue.map((p, i) => ({
             "@type": "ListItem",
             position: i + 1,
             name: p.name,
@@ -96,6 +98,7 @@ function matchesQuery(p: Product, q: string) {
 }
 
 function ShopPage() {
+  const { products } = useProducts();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [skinType, setSkinType] = useState("all");
@@ -126,7 +129,7 @@ function ShopPage() {
     else if (sort === "newest") sorted.sort((a, b) => b.addedOrder - a.addedOrder);
     else sorted.sort((a, b) => Number(b.featured) - Number(a.featured) || b.addedOrder - a.addedOrder);
     return sorted;
-  }, [query, category, skinType, price, availability, minRating, sort]);
+  }, [products, query, category, skinType, price, availability, minRating, sort]);
 
   const resetFilters = () => {
     setQuery("");
@@ -152,7 +155,7 @@ function ShopPage() {
         <div className="mx-auto max-w-7xl px-5 py-16 lg:py-20">
           <Reveal className="max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full border bg-background/70 px-4 py-1.5 text-xs font-semibold tracking-wide text-primary">
-              Skincare Shop · Nairobi CBD
+              Skincare Shop · Nairobi Pipeline
             </span>
             <h1 className="mt-6 text-3xl leading-tight font-bold text-balance sm:text-4xl lg:text-5xl">
               Professional Skincare Products,{" "}
@@ -187,20 +190,13 @@ function ShopPage() {
             <ul className="mt-4 flex flex-wrap gap-2">
               {shopCategories.map((c) => (
                 <li key={c}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setCategory(c);
-                      document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className={
-                      category === c
-                        ? "rounded-full gradient-brand px-4 py-2 text-sm font-semibold text-primary-foreground"
-                        : "rounded-full border bg-background px-4 py-2 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
-                    }
+                  <Link
+                    to="/shop/category/$slug"
+                    params={{ slug: categorySlug(c) }}
+                    className="rounded-full border bg-background px-4 py-2 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
                   >
                     {c}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -391,7 +387,7 @@ function ShopPage() {
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
             Our clinicians can recommend the right routine for your skin before you buy. Book a
-            consultation at our Nairobi CBD clinic.
+            consultation at our Nairobi Pipeline clinic.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             <Button asChild variant="hero" size="lg">

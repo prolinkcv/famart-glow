@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, Phone, ShoppingCart, X } from "lucide-react";
+import { Heart, Menu, Phone, ShoppingCart, X } from "lucide-react";
 import logo from "@/assets/famart-logo-new.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { SITE, telLink } from "@/lib/site";
@@ -68,6 +68,11 @@ export function Header() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <Button asChild variant="ghost" size="sm">
+            <Link to="/wishlist" aria-label="View wishlist">
+              <Heart /> Wishlist
+            </Link>
+          </Button>
+          <Button asChild variant="ghost" size="sm">
             <Link to="/cart" aria-label="View cart">
               <ShoppingCart /> Cart
             </Link>
@@ -114,6 +119,13 @@ export function Header() {
               className="rounded-xl px-4 py-3 text-sm font-medium"
             >
               Cart
+            </Link>
+            <Link
+              to="/wishlist"
+              onClick={() => setOpen(false)}
+              className="rounded-xl px-4 py-3 text-sm font-medium"
+            >
+              Wishlist
             </Link>
             <div className="mt-2 grid grid-cols-2 gap-2">
               <Button asChild variant="outline">

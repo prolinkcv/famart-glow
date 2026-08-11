@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { services } from "@/lib/site";
-import { products } from "@/lib/shop";
+import { categorySlug, products, shopCategories } from "@/lib/shop";
 
 // TODO: replace with your project URL once a project name or custom domain is set.
 const BASE_URL = "";
@@ -23,6 +23,11 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/book", changefreq: "monthly", priority: "0.9" },
           { path: "/contact", changefreq: "monthly", priority: "0.8" },
           { path: "/shop", changefreq: "weekly", priority: "0.9" },
+          ...shopCategories.map<SitemapEntry>((c) => ({
+            path: `/shop/category/${categorySlug(c)}`,
+            changefreq: "weekly",
+            priority: "0.8",
+          })),
           ...products.map<SitemapEntry>((p) => ({
             path: `/shop/product/${p.slug}`,
             changefreq: "monthly",
