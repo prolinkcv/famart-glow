@@ -3,7 +3,7 @@ import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/Reveal";
 import { CtaBand } from "@/components/sections";
-import { SITE, mapsLink, telLink, waLink } from "@/lib/site";
+import { SITE, mapsLink, telLink, telLinkAlt, waLink } from "@/lib/site";
 
 export const Route = createFileRoute("/contact")({
   component: Contact,
