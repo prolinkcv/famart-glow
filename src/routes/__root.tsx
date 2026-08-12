@@ -20,7 +20,7 @@ import { SITE, services } from "@/lib/site";
 import { CartProvider } from "@/lib/cart";
 import { ProductsProvider } from "@/lib/products";
 import { WishlistProvider } from "@/lib/wishlist";
-import { getProductOverrides } from "@/lib/shop.functions";
+import { getCustomProducts, getProductOverrides } from "@/lib/shop.functions";
 
 
 function NotFoundComponent() {
@@ -194,7 +194,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
   }),
-  loader: () => getProductOverrides(),
+  loader: async () => {
+    const [overrides, custom] = await Promise.all([getProductOverrides(), getCustomProducts()]);
+    return { overrides, custom };
+  },
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -217,11 +221,11 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const overrides = Route.useLoaderData();
+  const data = Route.useLoaderData();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ProductsProvider overrides={overrides ?? []}>
+      <ProductsProvider overrides={data?.overrides ?? []} custom={data?.custom ?? []}>
       <CartProvider>
       <WishlistProvider>
       <a

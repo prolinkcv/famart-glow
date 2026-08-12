@@ -607,26 +607,35 @@ export const emptyOverride = (slug: string): ProductOverride => ({
   hidden: false,
 });
 
-/** Merges admin overrides over the built-in catalogue and drops hidden products. */
-export function applyOverrides(overrides: ProductOverride[]): Product[] {
+/** Merges admin overrides over the built-in catalogue plus admin-created products. */
+export function applyOverrides(
+  overrides: ProductOverride[],
+  custom: CustomProduct[] = [],
+): Product[] {
   const map = new Map(overrides.map((o) => [o.slug, o]));
-  return products
-    .filter((p) => !map.get(p.slug)?.hidden)
-    .map((p) => {
-      const o = map.get(p.slug);
-      if (!o) return p;
-      return {
-        ...p,
-        priceKsh: o.priceKsh ?? p.priceKsh,
-        inStock: o.inStock ?? p.inStock,
-        images: o.imageUrl ? [o.imageUrl, ...p.images.slice(1)] : p.images,
-        seoTitle: o.seoTitle ?? p.seoTitle,
-        seoDescription: o.seoDescription ?? p.seoDescription,
-        rating: o.rating ?? p.rating,
-        reviewCount: o.reviewCount ?? p.reviewCount,
-      };
-    });
+  const merge = (p: Product): Product => {
+    const o = map.get(p.slug);
+    if (!o) return p;
+    return {
+      ...p,
+      priceKsh: o.priceKsh ?? p.priceKsh,
+      inStock: o.inStock ?? p.inStock,
+      images: o.imageUrl ? [o.imageUrl, ...p.images.slice(1)] : p.images,
+      seoTitle: o.seoTitle ?? p.seoTitle,
+      seoDescription: o.seoDescription ?? p.seoDescription,
+      rating: o.rating ?? p.rating,
+      reviewCount: o.reviewCount ?? p.reviewCount,
+    };
+  };
+
+  const base = products.filter((p) => !map.get(p.slug)?.hidden).map(merge);
+  const added = custom
+    .filter((c) => !c.hidden && !map.get(c.slug)?.hidden)
+    .map((c, i) => merge(customToProduct(c, i)));
+
+  return [...base, ...added];
 }
+
 
 export const categorySlug = (category: string) =>
   category
@@ -649,3 +658,118 @@ export const categoryCopy: Record<string, { title: string; description: string; 
       },
     ]),
   );
+
+/* ------------------------------------------------------------------ */
+/* Admin-created products (stored in the database, not in this file)    */
+/* ------------------------------------------------------------------ */
+
+/** A product created through the admin panel. */
+export interface CustomProduct {
+  slug: string;
+  name: string;
+  brand: string;
+  category: string;
+  short: string;
+  overview: string;
+  uses: string[];
+  howToUse: string[];
+  ingredients: string[];
+  skinTypes: string[];
+  precautions: string[];
+  concerns: string[];
+  priceKsh: number;
+  size: string | null;
+  inStock: boolean;
+  rating: number | null;
+  reviewCount: number;
+  featured: boolean;
+  images: string[];
+  seoTitle: string;
+  seoDescription: string;
+  relatedService: string | null;
+  hidden: boolean;
+}
+
+export const emptyCustomProduct = (): CustomProduct => ({
+  slug: "",
+  name: "",
+  brand: "Famart Derma",
+  category: shopCategories[0] ?? "Cleansers",
+  short: "",
+  overview: "",
+  uses: [],
+  howToUse: [],
+  ingredients: [],
+  skinTypes: ["All skin types"],
+  precautions: [
+    "For external use only. Avoid contact with the eyes.",
+    "Discontinue use and speak to a clinician if irritation occurs.",
+  ],
+  concerns: [],
+  priceKsh: 0,
+  size: null,
+  inStock: true,
+  rating: null,
+  reviewCount: 0,
+  featured: false,
+  images: [],
+  seoTitle: "",
+  seoDescription: "",
+  relatedService: null,
+  hidden: false,
+});
+
+export const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 80);
+
+const PLACEHOLDER_IMAGE = detailPackaging;
+
+/** Converts an admin-created product into the shared catalogue shape. */
+export function customToProduct(c: CustomProduct, index = 0): Product {
+  return {
+    slug: c.slug,
+    name: c.name,
+    brand: c.brand || "Famart Derma",
+    category: c.category,
+    short: c.short,
+    overview: c.overview || c.short,
+    uses: c.uses,
+    howToUse: c.howToUse,
+    ingredients: c.ingredients,
+    skinTypes: (c.skinTypes.length ? c.skinTypes : ["All skin types"]) as SkinType[],
+    precautions: c.precautions,
+    concerns: c.concerns,
+    priceKsh: c.priceKsh,
+    ...(c.size ? { size: c.size } : {}),
+    inStock: c.inStock,
+    rating: c.rating,
+    reviewCount: c.reviewCount,
+    ratingSource: "demo",
+    featured: c.featured,
+    addedOrder: 1000 + index,
+    images: c.images.length ? c.images : [PLACEHOLDER_IMAGE],
+    seoTitle: c.seoTitle || `${c.name} in Nairobi | Famart Healthcare`,
+    seoDescription:
+      c.seoDescription ||
+      `Buy ${c.name} in Nairobi from Famart Healthcare Medical and Skin Clinic. Order easily through WhatsApp.`,
+    ...(c.relatedService ? { relatedService: c.relatedService } : {}),
+  };
+}
+
+/**
+ * Builds a responsive srcset for images uploaded through the admin panel.
+ * Uploaded files are stored as `…-w800.webp` with 400 / 800 / 1600 variants.
+ */
+export function uploadedSrcSet(url: string | undefined): string | undefined {
+  if (!url || !/-w800\.webp$/.test(url)) return undefined;
+  return [
+    `${url.replace(/-w800\.webp$/, "-w400.webp")} 400w`,
+    `${url} 800w`,
+    `${url.replace(/-w800\.webp$/, "-w1600.webp")} 1600w`,
+  ].join(", ");
+}
