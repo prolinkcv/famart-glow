@@ -16,6 +16,8 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
+        const { readCustomProducts } = await import("@/lib/shop.server");
+        const custom = await readCustomProducts().catch(() => []);
         const entries: SitemapEntry[] = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
           { path: "/about", changefreq: "monthly", priority: "0.8" },
@@ -29,6 +31,11 @@ export const Route = createFileRoute("/sitemap.xml")({
             priority: "0.8",
           })),
           ...products.map<SitemapEntry>((p) => ({
+            path: `/shop/product/${p.slug}`,
+            changefreq: "monthly",
+            priority: "0.7",
+          })),
+          ...custom.map<SitemapEntry>((p) => ({
             path: `/shop/product/${p.slug}`,
             changefreq: "monthly",
             priority: "0.7",

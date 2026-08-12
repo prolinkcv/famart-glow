@@ -14,6 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
+      custom_products: {
+        Row: {
+          brand: string
+          category: string
+          concerns: string[]
+          created_at: string
+          featured: boolean
+          hidden: boolean
+          how_to_use: string[]
+          images: string[]
+          in_stock: boolean
+          ingredients: string[]
+          name: string
+          overview: string
+          precautions: string[]
+          price_ksh: number
+          rating: number | null
+          related_service: string | null
+          review_count: number
+          seo_description: string
+          seo_title: string
+          short: string
+          size: string | null
+          skin_types: string[]
+          slug: string
+          updated_at: string
+          uses: string[]
+        }
+        Insert: {
+          brand?: string
+          category: string
+          concerns?: string[]
+          created_at?: string
+          featured?: boolean
+          hidden?: boolean
+          how_to_use?: string[]
+          images?: string[]
+          in_stock?: boolean
+          ingredients?: string[]
+          name: string
+          overview?: string
+          precautions?: string[]
+          price_ksh?: number
+          rating?: number | null
+          related_service?: string | null
+          review_count?: number
+          seo_description?: string
+          seo_title?: string
+          short?: string
+          size?: string | null
+          skin_types?: string[]
+          slug: string
+          updated_at?: string
+          uses?: string[]
+        }
+        Update: {
+          brand?: string
+          category?: string
+          concerns?: string[]
+          created_at?: string
+          featured?: boolean
+          hidden?: boolean
+          how_to_use?: string[]
+          images?: string[]
+          in_stock?: boolean
+          ingredients?: string[]
+          name?: string
+          overview?: string
+          precautions?: string[]
+          price_ksh?: number
+          rating?: number | null
+          related_service?: string | null
+          review_count?: number
+          seo_description?: string
+          seo_title?: string
+          short?: string
+          size?: string | null
+          skin_types?: string[]
+          slug?: string
+          updated_at?: string
+          uses?: string[]
+        }
+        Relationships: []
+      }
       product_overrides: {
         Row: {
           hidden: boolean

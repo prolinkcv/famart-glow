@@ -5,7 +5,7 @@ import { StarRating, StockBadge } from "@/components/shop/StarRating";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
-import { formatKsh, orderMessage, type Product } from "@/lib/shop";
+import { formatKsh, orderMessage, uploadedSrcSet, type Product } from "@/lib/shop";
 import { openWhatsApp } from "@/lib/site";
 
 export function ProductCard({ product }: { product: Product }) {
@@ -49,6 +49,8 @@ export function ProductCard({ product }: { product: Product }) {
       >
         <img
           src={product.images[0]}
+          srcSet={uploadedSrcSet(product.images[0])}
+          sizes="(min-width: 1024px) 25vw, 50vw"
           alt={`${product.name} by ${product.brand}`}
           loading="lazy"
           width={768}
