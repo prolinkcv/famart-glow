@@ -3,6 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Download, LogOut, Plus, RotateCcw, Save, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { ImageUploadField } from "@/components/shop/ImageUploadField";
+import { ProductImagesField } from "@/components/shop/ProductImagesField";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -600,12 +602,12 @@ function ProductEditor({
             className="mt-1.5 h-11"
           />
         </div>
-        <ImageUploadField
-          id={`cimage-${slug}`}
+        <ProductImagesField
           slug={slug || "new"}
-          value={form.images[0] ?? ""}
-          onChange={(url) => set({ images: url ? [url, ...form.images.slice(1)] : [] })}
+          images={form.images}
+          onChange={(images) => set({ images })}
         />
+
         <div className="sm:col-span-2">
           <Label htmlFor={`short-${slug}`}>Short description (product cards)</Label>
           <Input
