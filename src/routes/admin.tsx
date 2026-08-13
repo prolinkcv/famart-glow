@@ -600,12 +600,12 @@ function ProductEditor({
             className="mt-1.5 h-11"
           />
         </div>
-        <ImageUploadField
-          id={`cimage-${slug}`}
+        <ProductImagesField
           slug={slug || "new"}
-          value={form.images[0] ?? ""}
-          onChange={(url) => set({ images: url ? [url, ...form.images.slice(1)] : [] })}
+          images={form.images}
+          onChange={(images) => set({ images })}
         />
+
         <div className="sm:col-span-2">
           <Label htmlFor={`short-${slug}`}>Short description (product cards)</Label>
           <Input
