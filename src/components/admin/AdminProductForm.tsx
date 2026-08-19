@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { ChevronLeft, ImagePlus, Loader2, Star, Trash2 } from "lucide-react";
+import { ChevronLeft, ImagePlus, Loader2, Plus, Star, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -64,12 +64,72 @@ function toInput(p: Product): ProductInput {
   };
 }
 
-const lines = (v: string[]) => v.join("\n");
-const parseLines = (v: string) =>
-  v
-    .split("\n")
-    .map((s) => s.trim())
-    .filter(Boolean);
+function LinesField({
+  label,
+  id,
+  values,
+  onChange,
+}: {
+  label: string;
+  id: string;
+  values: string[];
+  onChange: (values: string[]) => void;
+}) {
+  const refs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const update = (i: number, value: string) =>
+    onChange(values.map((v, idx) => (idx === i ? value : v)));
+
+  const remove = (i: number) => onChange(values.filter((_, idx) => idx !== i));
+
+  const add = () => {
+    onChange([...values, ""]);
+    requestAnimationFrame(() => refs.current[values.length]?.focus());
+  };
+
+  const onKeyDown = (i: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (i === values.length - 1) add();
+      else refs.current[i + 1]?.focus();
+    }
+  };
+
+  return (
+    <div>
+      <Label htmlFor={`${id}-0`}>{label}</Label>
+      <div className="mt-1.5 space-y-2">
+        {values.map((value, i) => (
+          <div key={`${id}-${i}`} className="flex gap-2">
+            <Input
+              ref={(el) => {
+                refs.current[i] = el;
+              }}
+              id={`${id}-${i}`}
+              value={value}
+              onChange={(e) => update(i, e.target.value)}
+              onKeyDown={(e) => onKeyDown(i, e)}
+              className="h-11"
+            />
+            <Button
+              type="button"
+              size="icon"
+              variant="outline"
+              className="h-11 w-11 shrink-0"
+              aria-label={`Remove ${label} line ${i + 1}`}
+              onClick={() => remove(i)}
+            >
+              <Trash2 className="size-4" />
+            </Button>
+          </div>
+        ))}
+      </div>
+      <Button type="button" variant="outline" size="sm" className="mt-2" onClick={add}>
+        <Plus /> Add line
+      </Button>
+    </div>
+  );
+}
 
 export function AdminProductForm({
   slug,
@@ -430,46 +490,30 @@ export function AdminProductForm({
         <section className="rounded-3xl border bg-card p-5 shadow-soft">
           <h2 className="font-display text-sm font-semibold">Details</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <div>
-              <Label htmlFor="p-uses">Benefits — one per line</Label>
-              <Textarea
-                id="p-uses"
-                rows={3}
-                value={lines(form.uses)}
-                onChange={(e) => set({ uses: parseLines(e.target.value) })}
-                className="mt-1.5"
-              />
-            </div>
-            <div>
-              <Label htmlFor="p-how">How to use — one per line</Label>
-              <Textarea
-                id="p-how"
-                rows={3}
-                value={lines(form.howToUse)}
-                onChange={(e) => set({ howToUse: parseLines(e.target.value) })}
-                className="mt-1.5"
-              />
-            </div>
-            <div>
-              <Label htmlFor="p-ing">Key ingredients — one per line</Label>
-              <Textarea
-                id="p-ing"
-                rows={3}
-                value={lines(form.ingredients)}
-                onChange={(e) => set({ ingredients: parseLines(e.target.value) })}
-                className="mt-1.5"
-              />
-            </div>
-            <div>
-              <Label htmlFor="p-concerns">Search tags — one per line</Label>
-              <Textarea
-                id="p-concerns"
-                rows={3}
-                value={lines(form.concerns)}
-                onChange={(e) => set({ concerns: parseLines(e.target.value) })}
-                className="mt-1.5"
-              />
-            </div>
+            <LinesField
+              id="p-uses"
+              label="Benefits"
+              values={form.uses}
+              onChange={(uses) => set({ uses })}
+            />
+            <LinesField
+              id="p-how"
+              label="How to use"
+              values={form.howToUse}
+              onChange={(howToUse) => set({ howToUse })}
+            />
+            <LinesField
+              id="p-ing"
+              label="Key ingredients"
+              values={form.ingredients}
+              onChange={(ingredients) => set({ ingredients })}
+            />
+            <LinesField
+              id="p-concerns"
+              label="Search tags"
+              values={form.concerns}
+              onChange={(concerns) => set({ concerns })}
+            />
           </div>
 
           <div className="mt-4">

@@ -98,12 +98,12 @@ export function AdminProductsList({
       ) : (
         <ul className="mt-6 overflow-hidden rounded-3xl border bg-card shadow-soft">
           {filtered.map((p, i) => (
-            <li key={p.slug} className={i > 0 ? "border-t" : ""}>
+            <li key={p.slug} className={`${i > 0 ? "border-t" : ""} transition-colors hover:bg-accent/60`}>
               <div className="flex items-center gap-2 p-3 sm:px-4">
                 <button
                   type="button"
                   onClick={() => onEdit(p.slug)}
-                  className="flex min-w-0 flex-1 items-center gap-3 text-left"
+                  className="flex min-w-0 flex-1 cursor-pointer items-center gap-3 text-left"
                   aria-label={`Edit ${p.name}`}
                 >
                   {p.images[0] ? (
