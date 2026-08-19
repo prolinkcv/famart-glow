@@ -20,7 +20,7 @@ import { SITE, services } from "@/lib/site";
 import { CartProvider } from "@/lib/cart";
 import { ProductsProvider } from "@/lib/products";
 import { WishlistProvider } from "@/lib/wishlist";
-import { getCustomProducts, getProductOverrides } from "@/lib/shop.functions";
+import { getProducts } from "@/lib/shop.functions";
 
 
 function NotFoundComponent() {
@@ -195,8 +195,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
   }),
   loader: async () => {
-    const [overrides, custom] = await Promise.all([getProductOverrides(), getCustomProducts()]);
-    return { overrides, custom };
+    const products = await getProducts();
+    return { products };
   },
 
   shellComponent: RootShell,
@@ -225,7 +225,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ProductsProvider overrides={data?.overrides ?? []} custom={data?.custom ?? []}>
+      <ProductsProvider products={data?.products ?? []}>
       <CartProvider>
       <WishlistProvider>
       <a
