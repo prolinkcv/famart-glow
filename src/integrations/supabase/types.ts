@@ -14,8 +14,9 @@ export type Database = {
   }
   public: {
     Tables: {
-      custom_products: {
+      products: {
         Row: {
+          added_order: number
           brand: string
           category: string
           concerns: string[]
@@ -31,6 +32,7 @@ export type Database = {
           precautions: string[]
           price_ksh: number
           rating: number | null
+          rating_source: string
           related_service: string | null
           review_count: number
           seo_description: string
@@ -43,6 +45,7 @@ export type Database = {
           uses: string[]
         }
         Insert: {
+          added_order?: number
           brand?: string
           category: string
           concerns?: string[]
@@ -58,6 +61,7 @@ export type Database = {
           precautions?: string[]
           price_ksh?: number
           rating?: number | null
+          rating_source?: string
           related_service?: string | null
           review_count?: number
           seo_description?: string
@@ -70,6 +74,7 @@ export type Database = {
           uses?: string[]
         }
         Update: {
+          added_order?: number
           brand?: string
           category?: string
           concerns?: string[]
@@ -85,6 +90,7 @@ export type Database = {
           precautions?: string[]
           price_ksh?: number
           rating?: number | null
+          rating_source?: string
           related_service?: string | null
           review_count?: number
           seo_description?: string
@@ -95,45 +101,6 @@ export type Database = {
           slug?: string
           updated_at?: string
           uses?: string[]
-        }
-        Relationships: []
-      }
-      product_overrides: {
-        Row: {
-          hidden: boolean
-          image_url: string | null
-          in_stock: boolean | null
-          price_ksh: number | null
-          rating: number | null
-          review_count: number | null
-          seo_description: string | null
-          seo_title: string | null
-          slug: string
-          updated_at: string
-        }
-        Insert: {
-          hidden?: boolean
-          image_url?: string | null
-          in_stock?: boolean | null
-          price_ksh?: number | null
-          rating?: number | null
-          review_count?: number | null
-          seo_description?: string | null
-          seo_title?: string | null
-          slug: string
-          updated_at?: string
-        }
-        Update: {
-          hidden?: boolean
-          image_url?: string | null
-          in_stock?: boolean | null
-          price_ksh?: number | null
-          rating?: number | null
-          review_count?: number | null
-          seo_description?: string | null
-          seo_title?: string | null
-          slug?: string
-          updated_at?: string
         }
         Relationships: []
       }

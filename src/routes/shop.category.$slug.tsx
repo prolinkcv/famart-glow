@@ -4,24 +4,20 @@ import { ProductCard } from "@/components/shop/ProductCard";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
 import { useProducts } from "@/lib/products";
-import {
-  categoryCopy,
-  categoryFromSlug,
-  categorySlug,
-  products as catalogue,
-  shopCategories,
-  SHOP_DISCLAIMER,
-} from "@/lib/shop";
+import { getProducts } from "@/lib/shop.functions";
+import { categoryCopyFor, categorySlug, uniqueCategories, SHOP_DISCLAIMER } from "@/lib/shop";
 import { waLink } from "@/lib/site";
 
 export const Route = createFileRoute("/shop/category/$slug")({
-  loader: ({ params }) => {
-    const category = categoryFromSlug(params.slug);
+  loader: async ({ params }) => {
+    const products = await getProducts();
+    const categories = uniqueCategories(products);
+    const category = categories.find((c) => categorySlug(c) === params.slug);
     if (!category) throw notFound();
-    return { category };
+    return { category, products };
   },
   head: ({ params, loaderData }) => {
-    const copy = loaderData ? categoryCopy[params.slug] : undefined;
+    const copy = loaderData ? categoryCopyFor(loaderData.category) : undefined;
     if (!copy) {
       return {
         meta: [
@@ -62,7 +58,7 @@ export const Route = createFileRoute("/shop/category/$slug")({
             "@context": "https://schema.org",
             "@type": "ItemList",
             name: `${loaderData?.category} at Famart Healthcare`,
-            itemListElement: catalogue
+            itemListElement: (loaderData?.products ?? [])
               .filter((p) => p.category === loaderData?.category)
               .map((p, i) => ({
                 "@type": "ListItem",
@@ -80,8 +76,8 @@ export const Route = createFileRoute("/shop/category/$slug")({
 
 function CategoryPage() {
   const { category } = Route.useLoaderData();
-  const { products } = useProducts();
-  const copy = categoryCopy[categorySlug(category)]!;
+  const { products, categories } = useProducts();
+  const copy = categoryCopyFor(category);
   const list = products.filter((p) => p.category === category);
 
   return (
@@ -130,7 +126,7 @@ function CategoryPage() {
           </Reveal>
 
           <ul className="mt-8 flex flex-wrap gap-2">
-            {shopCategories.map((c) => (
+            {categories.map((c) => (
               <li key={c}>
                 <Link
                   to="/shop/category/$slug"

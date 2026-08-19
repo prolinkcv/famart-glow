@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { services } from "@/lib/site";
-import { categorySlug, products, shopCategories } from "@/lib/shop";
+import { categorySlug, uniqueCategories } from "@/lib/shop";
 
 // TODO: replace with your project URL once a project name or custom domain is set.
 const BASE_URL = "";
@@ -16,8 +16,8 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
-        const { readCustomProducts } = await import("@/lib/shop.server");
-        const custom = await readCustomProducts().catch(() => []);
+        const { listProducts } = await import("@/lib/shop.server");
+        const products = await listProducts().catch(() => []);
         const entries: SitemapEntry[] = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
           { path: "/about", changefreq: "monthly", priority: "0.8" },
@@ -25,17 +25,12 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/book", changefreq: "monthly", priority: "0.9" },
           { path: "/contact", changefreq: "monthly", priority: "0.8" },
           { path: "/shop", changefreq: "weekly", priority: "0.9" },
-          ...shopCategories.map<SitemapEntry>((c) => ({
+          ...uniqueCategories(products).map<SitemapEntry>((c) => ({
             path: `/shop/category/${categorySlug(c)}`,
             changefreq: "weekly",
             priority: "0.8",
           })),
           ...products.map<SitemapEntry>((p) => ({
-            path: `/shop/product/${p.slug}`,
-            changefreq: "monthly",
-            priority: "0.7",
-          })),
-          ...custom.map<SitemapEntry>((p) => ({
             path: `/shop/product/${p.slug}`,
             changefreq: "monthly",
             priority: "0.7",

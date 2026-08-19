@@ -1,7 +1,7 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 import { useSession } from "@tanstack/react-start/server";
 import { createClient } from "@supabase/supabase-js";
-import type { CustomProduct, ProductOverride } from "@/lib/shop";
+import { PLACEHOLDER_IMAGE, type Product, type ProductInput } from "@/lib/shop";
 
 export interface AdminSession {
   admin?: boolean;
@@ -58,53 +58,142 @@ export function publicClient() {
   });
 }
 
-const COLUMNS =
-  "slug, price_ksh, in_stock, image_url, seo_title, seo_description, rating, review_count, hidden";
+/* ------------------------------------------------------------------ */
+/* Unified products — the single source of truth for the shop           */
+/* ------------------------------------------------------------------ */
 
-type Row = {
-  slug: string;
-  price_ksh: number | null;
-  in_stock: boolean | null;
-  image_url: string | null;
-  seo_title: string | null;
-  seo_description: string | null;
-  rating: number | string | null;
-  review_count: number | null;
-  hidden: boolean | null;
-};
+const PRODUCT_COLUMNS =
+  "slug, name, brand, category, short, overview, uses, how_to_use, ingredients, " +
+  "skin_types, precautions, concerns, price_ksh, size, in_stock, rating, review_count, " +
+  "rating_source, featured, added_order, images, seo_title, seo_description, " +
+  "related_service, hidden";
 
-function toOverride(r: Row): ProductOverride {
+type ProductRow = Record<string, unknown>;
+
+const asArray = (v: unknown): string[] => (Array.isArray(v) ? (v as string[]) : []);
+
+function toProduct(r: ProductRow): Product {
+  const images = asArray(r["images"]);
+  const skinTypes = asArray(r["skin_types"]);
   return {
-    slug: r.slug,
-    priceKsh: r.price_ksh,
-    inStock: r.in_stock,
-    imageUrl: r.image_url,
-    seoTitle: r.seo_title,
-    seoDescription: r.seo_description,
-    rating: r.rating === null ? null : Number(r.rating),
-    reviewCount: r.review_count,
-    hidden: r.hidden ?? false,
+    slug: String(r["slug"]),
+    name: String(r["name"] ?? ""),
+    brand: String(r["brand"] ?? "Famart Derma"),
+    category: String(r["category"] ?? ""),
+    short: String(r["short"] ?? ""),
+    overview: String(r["overview"] ?? ""),
+    uses: asArray(r["uses"]),
+    howToUse: asArray(r["how_to_use"]),
+    ingredients: asArray(r["ingredients"]),
+    skinTypes: (skinTypes.length ? skinTypes : ["All skin types"]) as Product["skinTypes"],
+    precautions: asArray(r["precautions"]),
+    concerns: asArray(r["concerns"]),
+    priceKsh: Number(r["price_ksh"] ?? 0),
+    ...(r["size"] ? { size: String(r["size"]) } : {}),
+    inStock: r["in_stock"] !== false,
+    rating: r["rating"] === null || r["rating"] === undefined ? null : Number(r["rating"]),
+    reviewCount: Number(r["review_count"] ?? 0),
+    ratingSource: (r["rating_source"] as Product["ratingSource"]) ?? "demo",
+    featured: r["featured"] === true,
+    addedOrder: Number(r["added_order"] ?? 0),
+    images: images.length ? images : [PLACEHOLDER_IMAGE],
+    seoTitle: String(r["seo_title"] ?? ""),
+    seoDescription: String(r["seo_description"] ?? ""),
+    ...(r["related_service"] ? { relatedService: String(r["related_service"]) } : {}),
+    hidden: r["hidden"] === true,
   };
 }
 
-export async function readOverrides(): Promise<ProductOverride[]> {
-  const { data, error } = await publicClient().from("product_overrides").select(COLUMNS);
+/** Public read: visible products only (RLS enforced as anon). */
+export async function listProducts(): Promise<Product[]> {
+  const { data, error } = await publicClient()
+    .from("products")
+    .select(PRODUCT_COLUMNS)
+    .eq("hidden", false)
+    .order("featured", { ascending: false })
+    .order("added_order", { ascending: false });
   if (error || !data) return [];
-  return (data as unknown as Row[]).map(toOverride);
+  return (data as unknown as ProductRow[]).map(toProduct);
 }
 
-export async function writeOverride(input: ProductOverride) {
+/** Public read: a single visible product by slug, for SEO/SSR. */
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+  const { data, error } = await publicClient()
+    .from("products")
+    .select(PRODUCT_COLUMNS)
+    .eq("slug", slug)
+    .eq("hidden", false)
+    .maybeSingle();
+  if (error || !data) return null;
+  return toProduct(data as unknown as ProductRow);
+}
+
+/** Admin read: all products including hidden. */
+export async function adminListProducts(): Promise<Product[]> {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { error } = await supabaseAdmin.from("product_overrides").upsert(
+  const { data, error } = await supabaseAdmin
+    .from("products")
+    .select(PRODUCT_COLUMNS)
+    .order("added_order", { ascending: false });
+  if (error || !data) return [];
+  return (data as unknown as ProductRow[]).map(toProduct);
+}
+
+/** Admin read: a single product by slug, including hidden. */
+export async function adminGetProduct(slug: string): Promise<Product | null> {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data, error } = await supabaseAdmin
+    .from("products")
+    .select(PRODUCT_COLUMNS)
+    .eq("slug", slug)
+    .maybeSingle();
+  if (error || !data) return null;
+  return toProduct(data as unknown as ProductRow);
+}
+
+/** Creates or updates a product. `slug` is the unique key. */
+export async function writeProduct(input: ProductInput) {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+  const existing = await adminGetProduct(input.slug);
+  let addedOrder = existing?.addedOrder;
+  if (addedOrder === undefined) {
+    const { data } = await supabaseAdmin
+      .from("products")
+      .select("added_order")
+      .order("added_order", { ascending: false })
+      .limit(1);
+    addedOrder = Number((data?.[0] as unknown as { added_order?: number } | undefined)?.added_order ?? 0) + 1;
+  }
+
+  const { error } = await supabaseAdmin.from("products").upsert(
     {
       slug: input.slug,
+      name: input.name,
+      brand: input.brand || "Famart Derma",
+      category: input.category,
+      short: input.short,
+      overview: input.overview || input.short,
+      uses: input.uses,
+      how_to_use: input.howToUse,
+      ingredients: input.ingredients,
+      skin_types: input.skinTypes.length ? input.skinTypes : ["All skin types"],
+      precautions: input.precautions,
+      concerns: input.concerns,
       price_ksh: input.priceKsh,
+      size: input.size,
       in_stock: input.inStock,
-      image_url: input.imageUrl,
-      seo_title: input.seoTitle,
-      seo_description: input.seoDescription,
       rating: input.rating,
       review_count: input.reviewCount,
+      rating_source: "demo",
+      featured: input.featured,
+      added_order: addedOrder,
+      images: input.images,
+      seo_title: input.seoTitle || `${input.name} in Nairobi | Famart Healthcare`,
+      seo_description:
+        input.seoDescription ||
+        `Buy ${input.name} in Nairobi from Famart Healthcare Medical and Skin Clinic. Order easily through WhatsApp.`,
+      related_service: input.relatedService,
       hidden: input.hidden,
       updated_at: new Date().toISOString(),
     },
@@ -113,108 +202,14 @@ export async function writeOverride(input: ProductOverride) {
   if (error) throw new Error(error.message);
 }
 
-export async function clearOverride(slug: string) {
+/** Deletes a product and removes its stored images from the bucket. */
+export async function deleteProduct(slug: string) {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { error } = await supabaseAdmin.from("product_overrides").delete().eq("slug", slug);
-  if (error) throw new Error(error.message);
-}
-
-/* ------------------------------------------------------------------ */
-/* Admin-created products                                              */
-/* ------------------------------------------------------------------ */
-
-const CUSTOM_COLUMNS =
-  "slug, name, brand, category, short, overview, uses, how_to_use, ingredients, skin_types, precautions, concerns, price_ksh, size, in_stock, rating, review_count, featured, images, seo_title, seo_description, related_service, hidden";
-
-type CustomRow = Record<string, unknown>;
-
-function toCustom(r: CustomRow): CustomProduct {
-  const arr = (v: unknown) => (Array.isArray(v) ? (v as string[]) : []);
-  return {
-    slug: String(r["slug"]),
-    name: String(r["name"] ?? ""),
-    brand: String(r["brand"] ?? "Famart Derma"),
-    category: String(r["category"] ?? ""),
-    short: String(r["short"] ?? ""),
-    overview: String(r["overview"] ?? ""),
-    uses: arr(r["uses"]),
-    howToUse: arr(r["how_to_use"]),
-    ingredients: arr(r["ingredients"]),
-    skinTypes: arr(r["skin_types"]),
-    precautions: arr(r["precautions"]),
-    concerns: arr(r["concerns"]),
-    priceKsh: Number(r["price_ksh"] ?? 0),
-    size: (r["size"] as string | null) ?? null,
-    inStock: r["in_stock"] !== false,
-    rating: r["rating"] === null || r["rating"] === undefined ? null : Number(r["rating"]),
-    reviewCount: Number(r["review_count"] ?? 0),
-    featured: r["featured"] === true,
-    images: arr(r["images"]),
-    seoTitle: String(r["seo_title"] ?? ""),
-    seoDescription: String(r["seo_description"] ?? ""),
-    relatedService: (r["related_service"] as string | null) ?? null,
-    hidden: r["hidden"] === true,
-  };
-}
-
-/** Public read: visible admin-created products. */
-export async function readCustomProducts(): Promise<CustomProduct[]> {
-  const { data, error } = await publicClient()
-    .from("custom_products")
-    .select(CUSTOM_COLUMNS)
-    .order("created_at", { ascending: true });
-  if (error || !data) return [];
-  return (data as CustomRow[]).map(toCustom);
-}
-
-/** Admin read: includes hidden products. */
-export async function readAllCustomProducts(): Promise<CustomProduct[]> {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { data, error } = await supabaseAdmin
-    .from("custom_products")
-    .select(CUSTOM_COLUMNS)
-    .order("created_at", { ascending: true });
-  if (error || !data) return [];
-  return (data as CustomRow[]).map(toCustom);
-}
-
-export async function writeCustomProduct(p: CustomProduct) {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { error } = await supabaseAdmin.from("custom_products").upsert(
-    {
-      slug: p.slug,
-      name: p.name,
-      brand: p.brand,
-      category: p.category,
-      short: p.short,
-      overview: p.overview,
-      uses: p.uses,
-      how_to_use: p.howToUse,
-      ingredients: p.ingredients,
-      skin_types: p.skinTypes,
-      precautions: p.precautions,
-      concerns: p.concerns,
-      price_ksh: p.priceKsh,
-      size: p.size,
-      in_stock: p.inStock,
-      rating: p.rating,
-      review_count: p.reviewCount,
-      featured: p.featured,
-      images: p.images,
-      seo_title: p.seoTitle,
-      seo_description: p.seoDescription,
-      related_service: p.relatedService,
-      hidden: p.hidden,
-      updated_at: new Date().toISOString(),
-    } as never,
-    { onConflict: "slug" },
-  );
-  if (error) throw new Error(error.message);
-}
-
-export async function deleteCustomProduct(slug: string) {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { error } = await supabaseAdmin.from("custom_products").delete().eq("slug", slug);
+  const existing = await adminGetProduct(slug);
+  if (existing) {
+    await Promise.all(existing.images.map((url) => deleteStoredImage(url)));
+  }
+  const { error } = await supabaseAdmin.from("products").delete().eq("slug", slug);
   if (error) throw new Error(error.message);
 }
 
@@ -244,4 +239,23 @@ export async function fetchProductImage(path: string) {
   const { data, error } = await supabaseAdmin.storage.from(IMAGE_BUCKET).download(path);
   if (error || !data) return null;
   return data;
+}
+
+/** Removes the 400/800/1600 variants of a previously uploaded image. */
+export async function deleteStoredImage(url: string) {
+  if (!url.startsWith("/api/public/product-image/")) return;
+  const path = url.replace("/api/public/product-image/", "");
+  const variants = Array.from(
+    new Set([
+      path,
+      path.replace(/-w800\.webp$/, "-w400.webp"),
+      path.replace(/-w800\.webp$/, "-w1600.webp"),
+    ]),
+  );
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  await supabaseAdmin.storage
+    .from(IMAGE_BUCKET)
+    .remove(variants)
+    .then(() => undefined)
+    .catch(() => undefined);
 }

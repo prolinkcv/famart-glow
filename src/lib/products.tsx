@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo } from "react";
 import type { ReactNode } from "react";
-import { applyOverrides, type CustomProduct, type Product, type ProductOverride } from "@/lib/shop";
+import { uniqueCategories, type Product } from "@/lib/shop";
 
 interface ProductsContextValue {
   products: Product[];
@@ -11,22 +11,17 @@ interface ProductsContextValue {
 const ProductsContext = createContext<ProductsContextValue | null>(null);
 
 export function ProductsProvider({
-  overrides,
-  custom = [],
+  products,
   children,
 }: {
-  overrides: ProductOverride[];
-  custom?: CustomProduct[];
+  products: Product[];
   children: ReactNode;
 }) {
-  const value = useMemo<ProductsContextValue>(() => {
-    const list = applyOverrides(overrides, custom);
-    return {
-      products: list,
-      getProduct: (slug: string) => list.find((p) => p.slug === slug),
-      categories: Array.from(new Set(list.map((p) => p.category))),
-    };
-  }, [overrides, custom]);
+  const value = useMemo<ProductsContextValue>(() => ({
+    products,
+    getProduct: (slug: string) => products.find((p) => p.slug === slug),
+    categories: uniqueCategories(products),
+  }), [products]);
 
   return <ProductsContext.Provider value={value}>{children}</ProductsContext.Provider>;
 }

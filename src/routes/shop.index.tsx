@@ -15,14 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useProducts } from "@/lib/products";
-import {
-  categorySlug,
-  products as catalogue,
-  shopCategories,
-  skinTypeOptions,
-  SHOP_DISCLAIMER,
-  type Product,
-} from "@/lib/shop";
+import { getProducts } from "@/lib/shop.functions";
+import { categorySlug, skinTypeOptions, SHOP_DISCLAIMER, type Product } from "@/lib/shop";
 import { SITE, waLink } from "@/lib/site";
 
 const TITLE = "Shop Premium Skincare Products | Famart Healthcare";
@@ -31,7 +25,13 @@ const DESCRIPTION =
 
 export const Route = createFileRoute("/shop/")({
   component: ShopPage,
-  head: () => ({
+  loader: async () => {
+    const products = await getProducts();
+    return { products };
+  },
+  head: ({ loaderData }) => {
+    const products = loaderData?.products ?? [];
+    return {
     meta: [
       { title: TITLE },
       { name: "description", content: DESCRIPTION },
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/shop/")({
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "Skincare products at Famart Healthcare",
-          itemListElement: catalogue.map((p, i) => ({
+          itemListElement: products.map((p, i) => ({
             "@type": "ListItem",
             position: i + 1,
             name: p.name,
@@ -59,7 +59,8 @@ export const Route = createFileRoute("/shop/")({
         }),
       },
     ],
-  }),
+    };
+  },
 });
 
 const sortOptions = [
@@ -98,7 +99,7 @@ function matchesQuery(p: Product, q: string) {
 }
 
 function ShopPage() {
-  const { products } = useProducts();
+  const { products, categories } = useProducts();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [skinType, setSkinType] = useState("all");
@@ -188,7 +189,7 @@ function ShopPage() {
               Shop by category
             </h2>
             <ul className="mt-4 flex flex-wrap gap-2">
-              {shopCategories.map((c) => (
+              {categories.map((c) => (
                 <li key={c}>
                   <Link
                     to="/shop/category/$slug"
@@ -252,7 +253,7 @@ function ShopPage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All categories</SelectItem>
-                  {shopCategories.map((c) => (
+                  {categories.map((c) => (
                     <SelectItem key={c} value={c}>
                       {c}
                     </SelectItem>

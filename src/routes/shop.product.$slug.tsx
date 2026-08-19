@@ -14,22 +14,18 @@ import {
 import { useCart } from "@/lib/cart";
 import { useProducts } from "@/lib/products";
 import { useWishlist } from "@/lib/wishlist";
-import { customToProduct, formatKsh, getProduct, orderMessage, SHOP_DISCLAIMER } from "@/lib/shop";
-import { getCustomProducts } from "@/lib/shop.functions";
+import { formatKsh, orderMessage, SHOP_DISCLAIMER } from "@/lib/shop";
+import { getProductBySlug } from "@/lib/shop.functions";
 import { openWhatsApp, services } from "@/lib/site";
 
 export const Route = createFileRoute("/shop/product/$slug")({
   loader: async ({ params }) => {
-    const staticProduct = getProduct(params.slug);
-    if (staticProduct) return { slug: staticProduct.slug, custom: null };
-    const custom = (await getCustomProducts()).find((c) => c.slug === params.slug);
-    if (!custom) throw notFound();
-    return { slug: custom.slug, custom };
+    const product = await getProductBySlug({ data: { slug: params.slug } });
+    if (!product) throw notFound();
+    return { product };
   },
-  head: ({ params, loaderData }) => {
-    const product = loaderData
-      ? (loaderData.custom ? customToProduct(loaderData.custom) : getProduct(params.slug))
-      : undefined;
+  head: ({ loaderData }) => {
+    const product = loaderData?.product;
     if (!product) {
       return {
         meta: [{ title: "Product not found | Famart Healthcare" }, { name: "robots", content: "noindex" }],
@@ -91,9 +87,8 @@ export const Route = createFileRoute("/shop/product/$slug")({
 });
 
 function ProductPage() {
-  const { slug, custom } = Route.useLoaderData();
-  const { products, getProduct: getMerged } = useProducts();
-  const product = getMerged(slug) ?? (custom ? customToProduct(custom) : getProduct(slug)!);
+  const { product } = Route.useLoaderData();
+  const { products } = useProducts();
   const { add } = useCart();
   const wishlist = useWishlist();
   const saved = wishlist.has(product.slug);
