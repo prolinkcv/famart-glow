@@ -122,6 +122,26 @@ export function AdminProductsList({
                     <span className="block truncate text-xs text-muted-foreground">
                       {p.category}
                     </span>
+                    <span className="mt-1 flex flex-wrap items-center gap-1.5">
+                      <span
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                          p.inStock
+                            ? "bg-green-100 text-green-700"
+                            : "bg-amber-100 text-amber-700"
+                        }`}
+                      >
+                        {p.inStock ? "In stock" : "Out of stock"}
+                      </span>
+                      <span
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                          p.hidden
+                            ? "bg-muted text-muted-foreground"
+                            : "bg-blue-100 text-blue-700"
+                        }`}
+                      >
+                        {p.hidden ? "Hidden" : "Live"}
+                      </span>
+                    </span>
                   </span>
                   <span className="shrink-0 text-sm font-semibold">{formatKsh(p.priceKsh)}</span>
                 </button>
