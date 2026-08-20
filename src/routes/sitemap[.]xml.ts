@@ -3,8 +3,7 @@ import type {} from "@tanstack/react-start";
 import { services } from "@/lib/site";
 import { categorySlug, uniqueCategories } from "@/lib/shop";
 
-// TODO: replace with your project URL once a project name or custom domain is set.
-const BASE_URL = "";
+const BASE_URL = process.env.URL || "https://famartclinic.co.ke";
 
 interface SitemapEntry {
   path: string;
