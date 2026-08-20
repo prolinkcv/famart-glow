@@ -1,293 +1,243 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/css" href="https://www.xml-sitemaps.com/css/sitemap.css"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-       <loc>https://famartclinic.co.ke/</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>1.0000</priority>
+    <loc>https://famartclinic.co.ke/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/about</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/services</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/book</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/contact</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/book</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/acne-treatment</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/category/cleansers</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/eczema-management</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/category/moisturizers</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/psoriasis-treatment</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/category/sunscreens</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/skin-allergy-treatment</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/category/acne-care</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/fungal-skin-infections</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/category/serums</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/skin-rash-diagnosis</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/category/body-care</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/pigmentation-disorders</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/category/hair-and-scalp-care</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/dark-spots-treatment</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/product/gentle-foaming-facial-cleanser</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/genital-wart-treatment</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/product/daily-moisturising-face-cream</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/herpes-treatment</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/product/broad-spectrum-sunscreen-spf-50</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/skin-tag-removal</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/product/acne-control-gel</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/stretch-mark-removal</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/product/vitamin-c-brightening-serum</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/keloid-treatment</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/product/hydrating-cream-cleanser</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/cracked-feet-treatment</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/product/barrier-repair-lotion</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/laser-services</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/product/tinted-mineral-sunscreen-spf-30</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/product/gentle-foaming-facial-cleanser</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/product/salicylic-acid-face-wash</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/product/daily-moisturising-face-cream</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/product/niacinamide-balancing-serum</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/product/broad-spectrum-sunscreen-spf-50</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/product/urea-body-lotion</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/product/acne-control-gel</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/shop/product/anti-dandruff-shampoo</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/skin-consultation</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.8000</priority>
+    <loc>https://famartclinic.co.ke/services/acne-treatment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/general-dermatology</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/eczema-management</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/cosmetic-skin-care</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/psoriasis-treatment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/hair-scalp-conditions</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/skin-allergy-treatment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/mole-assessment</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/fungal-skin-infections</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/wart-removal</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/skin-rash-diagnosis</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/skin-infection-treatment</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/pigmentation-disorders</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/services/patient-follow-up</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/skin-consultation</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/category/cleansers</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/general-dermatology</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/category/moisturizers</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/cosmetic-skin-care</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/category/sunscreens</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/hair-scalp-conditions</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/category/acne-care</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/mole-assessment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/category/serums</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/wart-removal</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/category/body-care</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/skin-infection-treatment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/category/hair-and-scalp-care</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/patient-follow-up</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/product/vitamin-c-brightening-serum</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/dark-spots-treatment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/product/hydrating-cream-cleanser</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/genital-wart-treatment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/product/barrier-repair-lotion</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/herpes-treatment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/product/tinted-mineral-sunscreen-spf-30</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/skin-tag-removal</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/product/salicylic-acid-face-wash</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/stretch-mark-removal</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/product/niacinamide-balancing-serum</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/keloid-treatment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/product/urea-body-lotion</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/cracked-feet-treatment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-       <loc>https://famartclinic.co.ke/shop/product/anti-dandruff-shampoo</loc>
-       <lastmod>2026-08-20T20:48:16+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
+    <loc>https://famartclinic.co.ke/services/laser-services</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
